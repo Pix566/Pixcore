@@ -42,8 +42,8 @@ pixcore:main
 | 8 | HUD/粒子/Tooltip 等效果 |
 | 16 | 服务端按键 |
 
-协议版本：`3`。
+协议版本：`4`。
 
 ## 版本协商
 
-`HandshakePacket` 携带 `minProtocolVersion` 与 `maxProtocolVersion`，服务端会检查自身协议版本是否落在客户端支持区间内；区间兼容时握手成功，否则拒绝。
+`HandshakePacket` 携带 `minProtocolVersion`、`maxProtocolVersion` 与模块版本表 JSON。服务端会检查自身协议版本是否落在客户端支持区间内；区间兼容时握手成功，否则拒绝。`HandshakeAckPacket` 会返回最终协议版本和服务端模块版本表。

@@ -8,7 +8,7 @@
 - 配置校验错误使用 SnakeYAML Mark 精确定位 YAML 行号。
 - 物品模型细化：支持 `foil` 强制附魔光泽，`handheld` 在第一人称视角放大显示，新增 `texture-gui` / `texture-hand` / `texture-ground` 多材质。
 - 配置校验增强：对 icons/armor/hud/tooltip/particles 的数值字段做类型校验。
-- 协议版本协商：Handshake 携带 min/max 版本，服务端按区间接受，HandshakeAck 返回最终协商版本。
+- 协议版本协商：Handshake 携带 min/max 版本与模块版本表，HandshakeAck 返回最终协商版本与服务端模块版本表。
 - 服务端规则差异下发：使用 SHA-256 内容哈希，只向玩家发送发生变化的模块。
 - ImageCache LRU 缓存与自动淘汰。
 - 物品模型 3D 化：动态模型从平面升级为六面盒，支持 depth / x-scale / y-scale / z-scale。

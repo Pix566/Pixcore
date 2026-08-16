@@ -1,5 +1,8 @@
 package dev.pixcore.protocol;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Pixcore shared protocol constants.
  *
@@ -15,7 +18,28 @@ public final class PixcoreProtocol {
     public static final String CHANNEL = "pixcore:main";
 
     /** Bump when the wire format or capability set changes. */
-    public static final int VERSION = 3;
+    public static final int VERSION = 4;
+
+    // Module versions
+    public static final int MODULE_ITEM_IMAGES_VERSION = 4;
+    public static final int MODULE_ARMOR_VERSION = 2;
+    public static final int MODULE_TOOLTIP_VERSION = 2;
+    public static final int MODULE_HUD_VERSION = 2;
+    public static final int MODULE_PARTICLES_VERSION = 2;
+    public static final int MODULE_KEYBINDS_VERSION = 2;
+    public static final int MODULE_RESOURCE_PACK_VERSION = 2;
+
+    public static String defaultModuleVersionsJson() {
+        Map<String, Object> versions = new LinkedHashMap<>();
+        versions.put("item-images", MODULE_ITEM_IMAGES_VERSION);
+        versions.put("armor", MODULE_ARMOR_VERSION);
+        versions.put("tooltip", MODULE_TOOLTIP_VERSION);
+        versions.put("hud", MODULE_HUD_VERSION);
+        versions.put("particles", MODULE_PARTICLES_VERSION);
+        versions.put("keybinds", MODULE_KEYBINDS_VERSION);
+        versions.put("resource-pack", MODULE_RESOURCE_PACK_VERSION);
+        return Json.write(versions);
+    }
 
     // Packet ids
     public static final int ID_HANDSHAKE = 1;

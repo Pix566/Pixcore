@@ -128,7 +128,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 
 格式：`[compressionFlag:byte][packetId:byte][body]`；字符串使用 4 字节长度前缀的 UTF-8，JSON 承载复杂规则，大包自动 gzip 压缩。
 
-协议版本：`3`；`Handshake` 携带 `minProtocolVersion` / `maxProtocolVersion`，服务端按区间协商。
+协议版本：`4`；`Handshake` 携带 `minProtocolVersion` / `maxProtocolVersion` 与模块版本表，服务端按区间协商。
 
 ## 后续方向
 
@@ -140,7 +140,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 - Tooltip 规则增强：已完成颜色/样式/combine/translate/component-json，下一步支持图片等复杂自定义组件与更复杂的冲突策略。
 - 资源包自动同步：已完成分块同步、文件哈希增量与 tick 限流，下一步增加版本校验与断点续传。
 - 配置热更新与校验：已完成逐条校验、Tab 补全与 SnakeYAML 精确行号，下一步提供更细字段校验。
-- 协议能力协商扩展：已完成 min/max 版本协商，下一步增加按模块版本号、服务端特性声明。
+- 协议能力协商扩展：已完成 min/max 版本协商与模块版本表，下一步增加服务端特性声明。
 
 ### 远期
 - GeckoLib 3D 物品模型：为自定义物品接入动画/3D 模型。
