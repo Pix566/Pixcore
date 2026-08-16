@@ -39,7 +39,7 @@ public abstract class ItemModelResolverMixin {
         if (rule == null) {
             return;
         }
-        ResourceLocation texture = ImageCache.INSTANCE.getOrLoad(rule.texture());
+        ResourceLocation texture = ImageCache.INSTANCE.getOrLoad(rule.textureFor(displayContext));
         if (texture == null) {
             return;
         }

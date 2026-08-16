@@ -1,6 +1,7 @@
 package dev.pixcore.neoforge.client;
 
 import dev.pixcore.protocol.Json;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ public final class IconRule {
     private final String texture;
     private final String innerTexture;
     private final String outerTexture;
+    private final String guiTexture;
+    private final String handTexture;
+    private final String groundTexture;
     private final double scale;
     private final double depth;
     private final double xScale;
@@ -30,6 +34,7 @@ public final class IconRule {
 
     private IconRule(String id, int priority, ItemMatcher matcher,
                      String texture, String innerTexture, String outerTexture,
+                     String guiTexture, String handTexture, String groundTexture,
                      double scale, double depth, double xScale, double yScale, double zScale,
                      boolean handheld, boolean foil) {
         this.id = id;
@@ -38,6 +43,9 @@ public final class IconRule {
         this.texture = texture;
         this.innerTexture = innerTexture;
         this.outerTexture = outerTexture;
+        this.guiTexture = guiTexture;
+        this.handTexture = handTexture;
+        this.groundTexture = groundTexture;
         this.scale = scale;
         this.depth = depth;
         this.xScale = xScale;
@@ -52,6 +60,9 @@ public final class IconRule {
         String texture = str(map.get("texture"), "");
         String innerTexture = str(map.get("inner-texture"), texture);
         String outerTexture = str(map.get("outer-texture"), texture);
+        String guiTexture = str(map.get("texture-gui"), texture);
+        String handTexture = str(map.get("texture-hand"), texture);
+        String groundTexture = str(map.get("texture-ground"), texture);
         double scale = num(map.get("scale"), 1.0);
         double depth = num(map.get("depth"), 1.0);
         double xScale = num(map.get("x-scale"), 1.0);
@@ -63,6 +74,7 @@ public final class IconRule {
         Object match = map.get("match");
         ItemMatcher matcher = ItemMatcher.fromMap(match instanceof Map<?, ?> m ? m : null);
         return new IconRule(id, priority, matcher, texture, innerTexture, outerTexture,
+                guiTexture, handTexture, groundTexture,
                 scale, depth, xScale, yScale, zScale, handheld, foil);
     }
 
@@ -88,6 +100,16 @@ public final class IconRule {
 
     public String outerTexture() {
         return outerTexture;
+    }
+
+    public String textureFor(ItemDisplayContext context) {
+        return switch (context) {
+            case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND, THIRD_PERSON_LEFT_HAND,
+                    THIRD_PERSON_RIGHT_HAND -> handTexture;
+            case GROUND -> groundTexture;
+            case GUI, HEAD -> guiTexture;
+            default -> texture;
+        };
     }
 
     public double scale() {

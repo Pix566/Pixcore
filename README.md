@@ -98,7 +98,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 |---|---|---|
 | 战斗反馈 | 客户端 | 采样实体生命变化，在实体颈部显示浮动伤害/治疗数字 |
 | 怪物血条 | 客户端 | 敌对生物头顶显示名称、像素条与生命数值，隐藏原版名牌 |
-| 自定义物品图片 / 模型替换 | 服务端规则 + 客户端渲染 | `icons.yml` 下发匹配规则；客户端通过 Mixin 注入 `ItemModelResolver`，动态选择 `pixcore:dynamic` 3D 模型，不修改物品数据；匹配字段含 material/name/name-regex/lore/lore-regex/nbt，支持 scale/depth/x-scale/y-scale/z-scale、handheld、foil |
+| 自定义物品图片 / 模型替换 | 服务端规则 + 客户端渲染 | `icons.yml` 下发匹配规则；客户端通过 Mixin 注入 `ItemModelResolver`，动态选择 `pixcore:dynamic` 3D 模型，不修改物品数据；匹配字段含 material/name/name-regex/lore/lore-regex/nbt，支持 scale/depth/x-scale/y-scale/z-scale、handheld、foil、texture-gui/texture-hand/texture-ground 多材质 |
 | 盔甲外观 | 服务端规则 + 客户端渲染 | `armor.yml` 匹配盔甲，通过 `IClientItemExtensions.getArmorTexture` 替换原版盔甲贴图，支持 inner-texture / outer-texture，保留原版盔甲模型 |
 | HUD 文本/图片 | 服务端下发 | `hud.yml` 支持 text/texture，锚点、透明度、缩放、时长 |
 | 粒子效果 | 服务端下发 | `particles.yml` 进服自动触发，支持注册表内任意简单粒子 ID |
@@ -134,7 +134,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 
 ### 近期
 - 盔甲外观细化：当前已支持内层/外层贴图替换，下一步支持染色、动态模型、按槽位细分。
-- 物品模型细化：当前已支持 3D 六面盒与轴缩放，下一步完善多材质、foil、手持模型等兼容。
+- 物品模型细化：当前已支持 3D 六面盒、轴缩放、foil、手持放大与 GUI/手持/掉落多材质，下一步支持动画与更复杂模型。
 
 ### 中期
 - Tooltip 规则增强：已完成颜色/样式/combine/translate/component-json，下一步支持图片等复杂自定义组件与更复杂的冲突策略。

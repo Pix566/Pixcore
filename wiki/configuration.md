@@ -42,6 +42,9 @@ icons:
       nbt:
         variant: blue
     texture: weapons/soul_blade.png
+    texture-gui: weapons/soul_blade_gui.png
+    texture-hand: weapons/soul_blade_hand.png
+    texture-ground: weapons/soul_blade_ground.png
     scale: 1.0
     depth: 1.0
     x-scale: 1.0

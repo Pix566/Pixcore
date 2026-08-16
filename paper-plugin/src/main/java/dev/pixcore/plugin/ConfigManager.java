@@ -138,9 +138,46 @@ public final class ConfigManager {
                     continue;
                 }
             }
+            if (!validateNumericFields(map, moduleName, entry.getKey(), fileName,
+                    lines.getOrDefault(entry.getKey(), -1))) {
+                continue;
+            }
             result.put(entry.getKey(), value);
         }
         return result;
+    }
+
+    private boolean validateNumericFields(Map<?, ?> map, String moduleName, String entryKey,
+                                          String fileName, int line) {
+        String[] numericFields = switch (moduleName) {
+            case "icons", "armor" -> new String[]{"scale", "depth", "x-scale", "y-scale", "z-scale", "priority"};
+            case "hud" -> new String[]{"x", "y", "argb", "scale", "duration-ticks", "width", "height", "alpha"};
+            case "tooltip-text" -> new String[]{"priority"};
+            case "particles" -> new String[]{"x", "y", "z", "offset-x", "offset-y", "offset-z", "speed", "count"};
+            default -> new String[0];
+        };
+        for (String field : numericFields) {
+            Object value = map.get(field);
+            if (value == null) {
+                continue;
+            }
+            if (!(value instanceof Number) && !(value instanceof String s && isNumeric(s))) {
+                plugin.getLogger().warning("Pixcore " + moduleName + " entry '" + entryKey
+                        + "' has non-numeric field '" + field + "' = " + value + "; skipped. ("
+                        + fileName + ":" + line + ")");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isNumeric(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     private Map<String, Integer> buildEntryLineMap(String fileName) {

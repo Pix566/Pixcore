@@ -37,7 +37,7 @@ public final class PixcoreItemModel implements ItemModel {
         if (rule == null) {
             return;
         }
-        ResourceLocation texture = ImageCache.INSTANCE.getOrLoad(rule.texture());
+        ResourceLocation texture = ImageCache.INSTANCE.getOrLoad(rule.textureFor(displayContext));
         if (texture == null) {
             return;
         }
