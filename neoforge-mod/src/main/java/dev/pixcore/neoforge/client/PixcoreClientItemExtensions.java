@@ -2,6 +2,7 @@ package dev.pixcore.neoforge.client;
 
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
@@ -21,9 +22,13 @@ public final class PixcoreClientItemExtensions implements IClientItemExtensions 
         if (rule == null) {
             return null;
         }
-        String path = type == EquipmentClientInfo.LayerType.HUMANOID_LEGGINGS
-                ? rule.innerTexture()
-                : rule.outerTexture();
+        EquipmentSlot slot = ArmorSlotContext.get();
+        String path = slot != null ? rule.textureForSlot(slot) : null;
+        if (path == null) {
+            path = type == EquipmentClientInfo.LayerType.HUMANOID_LEGGINGS
+                    ? rule.innerTexture()
+                    : rule.outerTexture();
+        }
         return ImageCache.INSTANCE.getOrLoad(path);
     }
 

@@ -47,6 +47,7 @@ GitHub Actions：
 - Mixin 类位于 `dev.pixcore.neoforge.mixin`
 - 当前注入：
   - `ItemModelResolverMixin`：动态物品模型选择
+  - `HumanoidArmorLayerMixin`：暴露当前盔甲槽位，用于按槽位贴图
 - Mixin 注入使用 `remap = false`，适配 NeoForge 官方映射；MixinGradle 插件与 ModDevGradle 不兼容，因此未生成传统 refmap。
 - 盔甲贴图替换使用 `IClientItemExtensions.getArmorTexture`，不依赖 Mixin。
 

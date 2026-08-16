@@ -4,7 +4,8 @@
   "package": "dev.pixcore.neoforge.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ItemModelResolverMixin"
+    "ItemModelResolverMixin",
+    "HumanoidArmorLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
