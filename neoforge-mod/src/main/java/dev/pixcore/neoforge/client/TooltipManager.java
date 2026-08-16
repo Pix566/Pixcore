@@ -31,6 +31,10 @@ public final class TooltipManager {
         rules = new ArrayList<>();
     }
 
+    public List<TooltipRule> rules() {
+        return rules;
+    }
+
     public void onTooltip(ItemTooltipEvent event) {
         if (rules.isEmpty() || event.getEntity() == null) {
             return;

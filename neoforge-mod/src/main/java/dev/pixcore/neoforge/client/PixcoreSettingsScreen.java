@@ -60,6 +60,12 @@ public final class PixcoreSettingsScreen extends Screen {
         }).bounds(centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT).build());
         y += 32;
 
+        addRenderableWidget(Button.builder(Component.literal("查看已加载规则"), btn ->
+                        this.minecraft.setScreen(new PixcoreRulesScreen()))
+                .bounds(centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT)
+                .build());
+        y += 24;
+
         addRenderableWidget(Button.builder(Component.literal("保存并关闭"), btn -> saveAndClose())
                 .bounds(centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT)
                 .build());
