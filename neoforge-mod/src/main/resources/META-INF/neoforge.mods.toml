@@ -1,0 +1,26 @@
+# Pixcore NeoForge client mod metadata
+license="MIT"
+
+[[mods]]
+modId="pixcore"
+version="0.1.0"
+displayName="Pixcore"
+description='''
+Pixcore is a client/server enhancement for Minecraft:
+combat feedback, monster health bars, custom item images and server-driven client effects.
+Pair with the Pixcore Paper plugin.
+'''
+
+[[dependencies.pixcore]]
+modId="neoforge"
+type="required"
+versionRange="[21.8.54,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.pixcore]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.8]"
+ordering="NONE"
+side="BOTH"

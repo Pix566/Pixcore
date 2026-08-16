@@ -1,0 +1,15 @@
+# Equipment appearance rules (client-side texture overlay).
+# Match supports the same fields as icons.yml.
+魔法盔甲:
+  priority: 100
+  match:
+    name: "魔法盔甲"
+    lore:
+      - "远古附魔"
+    nbt:
+      pixcore:
+        armor: legendary
+  texture: equipment/legendary.png
+  inner-texture: equipment/legendary_inner.png
+  outer-texture: equipment/legendary_outer.png
+  scale: 1.0

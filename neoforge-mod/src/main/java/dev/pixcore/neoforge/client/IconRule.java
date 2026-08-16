@@ -1,0 +1,165 @@
+package dev.pixcore.neoforge.client;
+
+import dev.pixcore.protocol.Json;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Client-side item image rule.
+ *
+ * <p>The first matching rule with the highest priority wins. The server sends
+ * rules as JSON; the client never sends image files back.
+ */
+public final class IconRule {
+    private final String id;
+    private final int priority;
+    private final ItemMatcher matcher;
+    private final String texture;
+    private final String innerTexture;
+    private final String outerTexture;
+    private final double scale;
+    private final double depth;
+    private final double xScale;
+    private final double yScale;
+    private final double zScale;
+    private final boolean handheld;
+    private final boolean foil;
+
+    private IconRule(String id, int priority, ItemMatcher matcher,
+                     String texture, String innerTexture, String outerTexture,
+                     double scale, double depth, double xScale, double yScale, double zScale,
+                     boolean handheld, boolean foil) {
+        this.id = id;
+        this.priority = priority;
+        this.matcher = matcher;
+        this.texture = texture;
+        this.innerTexture = innerTexture;
+        this.outerTexture = outerTexture;
+        this.scale = scale;
+        this.depth = depth;
+        this.xScale = xScale;
+        this.yScale = yScale;
+        this.zScale = zScale;
+        this.handheld = handheld;
+        this.foil = foil;
+    }
+
+    public static IconRule fromMap(String id, Map<?, ?> map) {
+        int priority = num(map.get("priority"), 0);
+        String texture = str(map.get("texture"), "");
+        String innerTexture = str(map.get("inner-texture"), texture);
+        String outerTexture = str(map.get("outer-texture"), texture);
+        double scale = num(map.get("scale"), 1.0);
+        double depth = num(map.get("depth"), 1.0);
+        double xScale = num(map.get("x-scale"), 1.0);
+        double yScale = num(map.get("y-scale"), 1.0);
+        double zScale = num(map.get("z-scale"), 1.0);
+        boolean handheld = Boolean.TRUE.equals(map.get("handheld"));
+        boolean foil = Boolean.TRUE.equals(map.get("foil"));
+
+        Object match = map.get("match");
+        ItemMatcher matcher = ItemMatcher.fromMap(match instanceof Map<?, ?> m ? m : null);
+        return new IconRule(id, priority, matcher, texture, innerTexture, outerTexture,
+                scale, depth, xScale, yScale, zScale, handheld, foil);
+    }
+
+    public boolean matches(ItemStack stack) {
+        return matcher.matches(stack);
+    }
+
+    public String id() {
+        return id;
+    }
+
+    public int priority() {
+        return priority;
+    }
+
+    public String texture() {
+        return texture;
+    }
+
+    public String innerTexture() {
+        return innerTexture;
+    }
+
+    public String outerTexture() {
+        return outerTexture;
+    }
+
+    public double scale() {
+        return scale;
+    }
+
+    public double depth() {
+        return depth;
+    }
+
+    public double xScale() {
+        return xScale;
+    }
+
+    public double yScale() {
+        return yScale;
+    }
+
+    public double zScale() {
+        return zScale;
+    }
+
+    public boolean handheld() {
+        return handheld;
+    }
+
+    public boolean foil() {
+        return foil;
+    }
+
+    private static String str(Object o, String def) {
+        return o == null ? def : String.valueOf(o);
+    }
+
+    private static int num(Object o, int def) {
+        if (o instanceof Number n) {
+            return n.intValue();
+        }
+        if (o instanceof String s) {
+            try {
+                return Integer.parseInt(s);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return def;
+    }
+
+    private static double num(Object o, double def) {
+        if (o instanceof Number n) {
+            return n.doubleValue();
+        }
+        if (o instanceof String s) {
+            try {
+                return Double.parseDouble(s);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return def;
+    }
+
+    /** Parses the JSON object sent by {@code IconRulesPacket}. */
+    public static List<IconRule> parseAll(String json) {
+        Object root = Json.parse(json);
+        List<IconRule> rules = new ArrayList<>();
+        if (root instanceof Map<?, ?> map) {
+            for (Map.Entry<?, ?> e : map.entrySet()) {
+                if (e.getValue() instanceof Map<?, ?> ruleMap) {
+                    rules.add(fromMap(String.valueOf(e.getKey()), ruleMap));
+                }
+            }
+            rules.sort((a, b) -> Integer.compare(b.priority(), a.priority()));
+        }
+        return rules;
+    }
+}

@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+evaluationDependsOn(':protocol')
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+}
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:${rootProject.property('paper_version')}"
+    implementation project(':protocol')
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.jar {
+    from project(':protocol').sourceSets.main.output
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveBaseName = 'Pixcore-Plugin'
+}

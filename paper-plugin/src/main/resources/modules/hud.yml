@@ -1,0 +1,29 @@
+# HUD text and texture entries sent after the Pixcore handshake.
+welcome_message:
+  enable: true
+  type: text
+  text:
+    - "欢迎来到 Pixcore 服务器"
+    - "输入 /pixcore 查看管理命令"
+  anchor: top-center
+  x: 0
+  y: 10
+  argb: -256
+  scale: 1.5
+  shadow: true
+  priority: 10
+  duration-ticks: 120
+
+spawn_banner:
+  enable: false
+  type: texture
+  texture: hud/spawn_banner.png
+  anchor: top-right
+  x: -10
+  y: 10
+  width: 64
+  height: 32
+  alpha: 1.0
+  scale: 1.0
+  layer: 0
+  duration-ticks: 200

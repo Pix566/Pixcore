@@ -1,0 +1,29 @@
+# Custom item image rules.
+# The server only sends matching rules; image files must be placed in each
+# client's .minecraft/resourcepacks/pixcore/ directory.
+# Match supports: material, name, name-regex, lore, lore-regex, nbt.
+# handheld: true 时仅在玩家手持该物品时显示叠加层；false 则始终在物品栏/快捷栏显示。
+icons:
+  soul_blade:
+    priority: 100
+    match:
+      material: diamond_sword
+      name: "Soul Blade"
+    texture: weapons/soul_blade.png
+    scale: 1.0
+    depth: 1.0
+    x-scale: 1.0
+    y-scale: 1.0
+    z-scale: 1.0
+    handheld: true
+    foil: false
+  blue_blade:
+    priority: 50
+    match:
+      material: diamond_sword
+      name-regex: "^Blue Blade \\+\\d+$"
+      nbt:
+        variant: blue
+    texture: weapons/blue_blade.png
+    scale: 1.0
+    handheld: false

@@ -1,0 +1,58 @@
+site_name: Pixcore
+site_description: Pixcore Minecraft 客户端/服务端增强项目 Wiki
+site_url: ""
+docs_dir: wiki
+use_directory_urls: false
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换浅色模式
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+    - toc.follow
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - 首页: README.md
+  - 安装指南: installation.md
+  - 配置说明: configuration.md
+  - 命令与权限: commands.md
+  - 客户端功能: client-features.md
+  - 服务端功能: server-features.md
+  - 网络协议: protocol.md
+  - 开发与构建: development.md
+  - 路线图: roadmap.md
+  - 常见问题: faq.md

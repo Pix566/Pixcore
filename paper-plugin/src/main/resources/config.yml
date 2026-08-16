@@ -1,0 +1,36 @@
+# Pixcore Paper plugin main configuration.
+# After editing, run /pixcore reload.
+
+modules:
+  item-images: true
+  hud: true
+  tooltip: true
+  particles: true
+  keybinds: true
+  armor: true
+  pickup-hud: true
+  resource-pack-sync: true
+
+protocol:
+  # Effects channel carries HUD, particles, tooltip and item image rules.
+  effects-channel-enabled: true
+  # Input channel carries server-defined keybind events.
+  input-channel-enabled: true
+
+client:
+  compatibility:
+    # allow-unknown: vanilla clients can join; Pixcore data is skipped.
+    # require-compatible: only send data to clients that declared Pixcore capabilities.
+    mode: allow-unknown
+
+limits:
+  max-icon-rules: 512
+  max-hud-entries: 64
+  max-tooltip-rules: 64
+  max-particle-entries: 64
+  max-particle-count: 128
+  max-armor-rules: 64
+  max-events-per-player-per-second: 40
+  max-keybind-definitions: 64
+  max-key-events-per-second: 20
+  max-resource-pack-chunks-per-tick: 20

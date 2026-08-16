@@ -1,0 +1,24 @@
+name: Pixcore
+version: 0.1.0
+main: dev.pixcore.plugin.PixcorePlugin
+api-version: '1.21'
+authors:
+  - Pixcore
+description: Pixcore client-server enhancement (NeoForge client + Paper server)
+commands:
+  pixcore:
+    description: Pixcore admin commands
+    usage: /pixcore <reload|hud|capabilities|effect>
+permissions:
+  pixcore.reload:
+    description: Reload Pixcore configuration
+    default: op
+  pixcore.hud:
+    description: Send a HUD entry to a player
+    default: op
+  pixcore.capabilities:
+    description: Show a player's negotiated Pixcore capabilities
+    default: op
+  pixcore.effect.clear:
+    description: Clear a Pixcore effect from a player
+    default: op

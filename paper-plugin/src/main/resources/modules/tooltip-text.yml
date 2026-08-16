@@ -1,0 +1,28 @@
+# Tooltip text enhancement rules.
+# Supported operations: append / prepend / replace.
+# Match supports material, name, name-regex, lore, lore-regex and nbt.
+rare_hint:
+  priority: 10
+  operation: append
+  match:
+    material: diamond_sword
+    name-regex: ".*"
+  lines:
+    - '&7来自 Pixcore 的提示'
+    - '&6这是一件稀有物品'
+
+legendary_hint:
+  priority: 100
+  operation: prepend
+  combine: first
+  match:
+    material: diamond_sword
+    lore:
+      - "Legendary"
+    nbt:
+      variant: legendary
+  color: "#FFD700"
+  bold: true
+  lines:
+    - '✦ 传说级物品 ✦'
+    - '&e右键查看详情'

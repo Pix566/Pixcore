@@ -1,0 +1,49 @@
+name: Sync Wiki
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'wiki/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: repo
+
+      - name: Checkout wiki repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: wiki
+
+      - name: Sync wiki files
+        run: |
+          # Remove old wiki pages (keeps .git)
+          rm -rf wiki/*
+          # Copy local wiki pages
+          cp -r repo/wiki/* wiki/
+          # GitHub Wiki uses Home.md as the landing page
+          cp repo/wiki/README.md wiki/Home.md
+
+      - name: Commit and push
+        run: |
+          cd wiki
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No wiki changes"
+          else
+            git commit -m "Sync wiki from repository"
+            git push
+          fi

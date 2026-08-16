@@ -1,0 +1,11 @@
+# Particle effects sent after the Pixcore handshake.
+spawn_sparkle:
+  particle-id: minecraft:end_rod
+  x: 0.5
+  y: 65.0
+  z: 0.5
+  offset-x: 0.3
+  offset-y: 0.3
+  offset-z: 0.3
+  speed: 0.05
+  count: 40
