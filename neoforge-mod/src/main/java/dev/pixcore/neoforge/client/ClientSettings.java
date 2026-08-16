@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -20,6 +22,7 @@ public final class ClientSettings {
     public int pickupHudRightMargin = 36;
     public int pickupHudBottomMargin = 48;
     public final Set<String> disabledRules = new HashSet<>();
+    public final Map<String, Double> ruleScaleOverrides = new HashMap<>();
 
     public ClientSettings() {
     }
@@ -52,6 +55,19 @@ public final class ClientSettings {
                     }
                 }
             }
+            ruleScaleOverrides.clear();
+            String scales = props.getProperty("ruleScaleOverrides", "");
+            if (!scales.isEmpty()) {
+                for (String pair : scales.split(",")) {
+                    String[] parts = pair.split("=");
+                    if (parts.length == 2) {
+                        try {
+                            ruleScaleOverrides.put(parts[0].trim(), Double.parseDouble(parts[1].trim()));
+                        } catch (NumberFormatException ignored) {
+                        }
+                    }
+                }
+            }
         } catch (IOException | NumberFormatException ignored) {
             // keep defaults on any parse failure
         }
@@ -69,6 +85,14 @@ public final class ClientSettings {
             props.setProperty("pickupHudRightMargin", Integer.toString(pickupHudRightMargin));
             props.setProperty("pickupHudBottomMargin", Integer.toString(pickupHudBottomMargin));
             props.setProperty("disabledRules", String.join(",", disabledRules));
+            StringBuilder scaleBuilder = new StringBuilder();
+            for (Map.Entry<String, Double> entry : ruleScaleOverrides.entrySet()) {
+                if (scaleBuilder.length() > 0) {
+                    scaleBuilder.append(',');
+                }
+                scaleBuilder.append(entry.getKey()).append('=').append(entry.getValue());
+            }
+            props.setProperty("ruleScaleOverrides", scaleBuilder.toString());
             try (OutputStream out = Files.newOutputStream(file)) {
                 props.store(out, "Pixcore client settings");
             }

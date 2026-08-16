@@ -87,6 +87,8 @@ icons:
   color: "#FFD700"
   pulse-color: "#FF4500"
   pulse-speed: 1.0
+  model-anim: true
+  model-anim-speed: 1.0
   scale: 1.0
 ```
 

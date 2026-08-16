@@ -39,13 +39,16 @@ public final class IconRule {
     private final Integer color;
     private final Integer pulseColor;
     private final double pulseSpeed;
+    private final boolean modelAnim;
+    private final double modelAnimSpeed;
 
     private IconRule(String id, int priority, ItemMatcher matcher,
                      String texture, String innerTexture, String outerTexture,
                      String guiTexture, String handTexture, String groundTexture,
                      String headTexture, String chestTexture, String legsTexture, String feetTexture,
                      double scale, double depth, double xScale, double yScale, double zScale,
-                     boolean handheld, boolean foil, Integer color, Integer pulseColor, double pulseSpeed) {
+                     boolean handheld, boolean foil, Integer color, Integer pulseColor, double pulseSpeed,
+                     boolean modelAnim, double modelAnimSpeed) {
         this.id = id;
         this.priority = priority;
         this.matcher = matcher;
@@ -69,6 +72,8 @@ public final class IconRule {
         this.color = color;
         this.pulseColor = pulseColor;
         this.pulseSpeed = pulseSpeed;
+        this.modelAnim = modelAnim;
+        this.modelAnimSpeed = modelAnimSpeed;
     }
 
     public static IconRule fromMap(String id, Map<?, ?> map) {
@@ -93,13 +98,16 @@ public final class IconRule {
         Integer color = parseColor(map.get("color"));
         Integer pulseColor = parseColor(map.get("pulse-color"));
         double pulseSpeed = num(map.get("pulse-speed"), 1.0);
+        boolean modelAnim = Boolean.TRUE.equals(map.get("model-anim"));
+        double modelAnimSpeed = num(map.get("model-anim-speed"), 1.0);
 
         Object match = map.get("match");
         ItemMatcher matcher = ItemMatcher.fromMap(match instanceof Map<?, ?> m ? m : null);
         return new IconRule(id, priority, matcher, texture, innerTexture, outerTexture,
                 guiTexture, handTexture, groundTexture,
                 headTexture, chestTexture, legsTexture, feetTexture,
-                scale, depth, xScale, yScale, zScale, handheld, foil, color, pulseColor, pulseSpeed);
+                scale, depth, xScale, yScale, zScale, handheld, foil, color, pulseColor, pulseSpeed,
+                modelAnim, modelAnimSpeed);
     }
 
     public boolean matches(ItemStack stack) {
@@ -184,6 +192,14 @@ public final class IconRule {
 
     public double pulseSpeed() {
         return pulseSpeed;
+    }
+
+    public boolean modelAnim() {
+        return modelAnim;
+    }
+
+    public double modelAnimSpeed() {
+        return modelAnimSpeed;
     }
 
     private static Integer parseColor(Object o) {

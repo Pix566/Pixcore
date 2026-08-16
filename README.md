@@ -99,14 +99,14 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 | 战斗反馈 | 客户端 | 采样实体生命变化，在实体颈部显示浮动伤害/治疗数字 |
 | 怪物血条 | 客户端 | 敌对生物头顶显示名称、像素条与生命数值，隐藏原版名牌 |
 | 自定义物品图片 / 模型替换 | 服务端规则 + 客户端渲染 | `icons.yml` 下发匹配规则；客户端通过 Mixin 注入 `ItemModelResolver`，动态选择 `pixcore:dynamic` 3D 模型，不修改物品数据；匹配字段含 material/name/name-regex/lore/lore-regex/nbt，支持 scale/depth/x-scale/y-scale/z-scale、handheld、foil、texture-gui/texture-hand/texture-ground 多材质 |
-| 盔甲外观 | 服务端规则 + 客户端渲染 | `armor.yml` 匹配盔甲，通过 `IClientItemExtensions.getArmorTexture` 替换原版盔甲贴图，支持 inner/outer、head/chest/legs/feet 按槽位贴图、color 染色与 pulse-color 动态脉冲，保留原版盔甲模型 |
+| 盔甲外观 | 服务端规则 + 客户端渲染 | `armor.yml` 匹配盔甲，通过 `IClientItemExtensions` 替换贴图与模型，支持 inner/outer、按槽位贴图、color 染色、pulse-color 动态脉冲与 model-anim 模型动画，保留原版盔甲模型 |
 | HUD 文本/图片 | 服务端下发 | `hud.yml` 支持 text/texture，锚点、透明度、缩放、时长 |
 | 粒子效果 | 服务端下发 | `particles.yml` 进服自动触发，支持注册表内任意简单粒子 ID |
 | Tooltip 规则 | 服务端下发 + 客户端渲染 | `tooltip-text.yml` 支持 append/prepend/replace、combine、颜色/样式、translate、keybind、component-json、image 图片组件，匹配字段与图标一致，支持 `&` 颜色代码 |
 | 服务端按键 | 服务端下发 + 客户端动态注册 | `keybinds.yml` 定义，客户端动态创建 `KeyMapping` 并上报按下/释放 |
 | 资源包自动同步 | 服务端下发 + 客户端写入 | 服务端 `resourcepacks/pixcore` 文件夹按分块同步到客户端对应目录；客户端上报本地哈希，服务端只发送缺失/变化文件，并按 tick 限流发送 |
 | 拾取 HUD 通知 | 服务端事件 + 客户端 HUD | 玩家拾取物品时自动在右下角显示物品名与数量 |
-| HUD 设置界面 | 客户端 | 按 `P` 打开设置，可开关战斗/治疗/怪物血条/拾取 HUD、调整边距、查看/禁用/启用已加载规则 |
+| HUD 设置界面 | 客户端 | 按 `P` 打开设置，可开关战斗/治疗/怪物血条/拾取 HUD、调整边距、查看/禁用/编辑已加载规则 |
 | 能力协商 | 双端 | 客户端握手声明 capabilities，服务端按能力下发 |
 
 ## 命令与权限
@@ -133,7 +133,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 ## 后续方向
 
 ### 近期
-- 盔甲外观细化：当前已支持内层/外层贴图、染色、按槽位贴图与 pulse-color 动态脉冲，下一步支持真正动态模型。
+- 盔甲外观细化：当前已支持内层/外层贴图、染色、按槽位贴图、pulse-color 动态脉冲与 model-anim 模型动画。
 - 物品模型细化：当前已支持 3D 六面盒、轴缩放、foil、手持放大与 GUI/手持/掉落多材质，下一步支持动画与更复杂模型。
 
 ### 中期
@@ -145,4 +145,4 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 ### 远期
 - GeckoLib 3D 物品模型：为自定义物品接入动画/3D 模型。
 - 跨 Minecraft 版本支持：抽象协议层与版本适配，降低升级成本。
-- 客户端内置可视化配置器：已提供规则查看器、单条规则禁用/启用与一键禁用/启用，下一步支持字段级编辑。
+- 客户端内置可视化配置器：已提供规则查看器、单条规则禁用/启用、一键禁用/启用与 scale 字段级编辑，下一步支持更多字段。

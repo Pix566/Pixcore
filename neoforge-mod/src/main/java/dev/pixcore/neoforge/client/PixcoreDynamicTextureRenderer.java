@@ -97,7 +97,7 @@ public final class PixcoreDynamicTextureRenderer implements SpecialModelRenderer
         if (texture == null) {
             return null;
         }
-        return new PixcoreRenderData(texture, rule.scale(), rule.depth(),
+        return new PixcoreRenderData(texture, PixcoreClientState.INSTANCE.scaleFor(rule), rule.depth(),
                 rule.xScale(), rule.yScale(), rule.zScale(), rule.handheld());
     }
 }

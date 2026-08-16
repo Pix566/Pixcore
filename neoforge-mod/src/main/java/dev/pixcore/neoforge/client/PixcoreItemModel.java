@@ -42,7 +42,7 @@ public final class PixcoreItemModel implements ItemModel {
             return;
         }
         ItemStackRenderState.LayerRenderState layer = renderState.newLayer();
-        layer.setupSpecialModel(renderer, new PixcoreRenderData(texture, rule.scale(), rule.depth(),
+        layer.setupSpecialModel(renderer, new PixcoreRenderData(texture, PixcoreClientState.INSTANCE.scaleFor(rule), rule.depth(),
                 rule.xScale(), rule.yScale(), rule.zScale(), rule.handheld()));
         if (rule.foil()) {
             layer.setFoilType(ItemStackRenderState.FoilType.STANDARD);

@@ -44,7 +44,7 @@ public abstract class ItemModelResolverMixin {
             return;
         }
         ItemStackRenderState.LayerRenderState layer = renderState.newLayer();
-        layer.setupSpecialModel(new PixcoreDynamicTextureRenderer(), new PixcoreRenderData(texture, rule.scale(), rule.depth(),
+        layer.setupSpecialModel(new PixcoreDynamicTextureRenderer(), new PixcoreRenderData(texture, PixcoreClientState.INSTANCE.scaleFor(rule), rule.depth(),
                 rule.xScale(), rule.yScale(), rule.zScale(), rule.handheld()));
         if (rule.foil()) {
             layer.setFoilType(ItemStackRenderState.FoilType.STANDARD);

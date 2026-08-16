@@ -49,16 +49,31 @@ public final class PixcoreRulesScreen extends Screen {
             }
             String plainId = id.substring(id.indexOf(':') + 1);
             boolean disabled = state.settings.disabledRules.contains(plainId);
-            Button button = Button.builder(Component.literal((disabled ? "[启用] " : "[禁用] ") + plainId), btn -> {
+            Button toggle = Button.builder(Component.literal(disabled ? "启用" : "禁用"), btn -> {
                 if (state.settings.disabledRules.contains(plainId)) {
                     state.settings.disabledRules.remove(plainId);
                 } else {
                     state.settings.disabledRules.add(plainId);
                 }
                 state.settings.save();
-                btn.setMessage(Component.literal((state.settings.disabledRules.contains(plainId) ? "[启用] " : "[禁用] ") + plainId));
-            }).bounds(20, y, 220, 18).build();
-            addRenderableWidget(button);
+                btn.setMessage(Component.literal(state.settings.disabledRules.contains(plainId) ? "启用" : "禁用"));
+            }).bounds(20, y, 60, 18).build();
+            addRenderableWidget(toggle);
+
+            double currentScale = state.iconRules().stream()
+                    .filter(r -> r.id().equals(plainId))
+                    .map(PixcoreClientState.INSTANCE::scaleFor)
+                    .findFirst()
+                    .orElseGet(() -> state.armorRules().stream()
+                            .filter(r -> r.id().equals(plainId))
+                            .map(PixcoreClientState.INSTANCE::scaleFor)
+                            .findFirst().orElse(1.0));
+            Button edit = Button.builder(Component.literal("编辑"), btn ->
+                            this.minecraft.setScreen(new EditRuleScreen(plainId, currentScale)))
+                    .bounds(90, y, 50, 18)
+                    .build();
+            addRenderableWidget(edit);
+
             y += 20;
             shown++;
         }

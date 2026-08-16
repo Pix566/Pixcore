@@ -12,11 +12,11 @@
 - 服务端规则差异下发：使用 SHA-256 内容哈希，只向玩家发送发生变化的模块。
 - ImageCache LRU 缓存与自动淘汰。
 - 物品模型 3D 化：动态模型从平面升级为六面盒，支持 depth / x-scale / y-scale / z-scale。
-- 盔甲外观：通过 `IClientItemExtensions.getArmorTexture` 替换原版盔甲贴图，支持 inner/outer、head/chest/legs/feet 按槽位贴图、color 染色与 pulse-color 动态脉冲。
+- 盔甲外观：通过 `IClientItemExtensions` 替换原版盔甲贴图与模型，支持 inner/outer、按槽位贴图、color 染色、pulse-color 动态脉冲与 model-anim 模型动画。
 - 配置逐条校验：非 Map 条目或缺少必填字段时跳过并输出定位日志。
 - HUD 性能优化：使用 ID 索引 Map 快速移除/更新条目。
 - 拾取 HUD 设置界面实时位置预览。
-- 客户端规则查看器：在设置界面查看已加载图标/盔甲/Tooltip 规则，并支持单条规则与一键禁用/启用。
+- 客户端规则查看器：在设置界面查看已加载图标/盔甲/Tooltip 规则，支持单条规则禁用/启用、一键禁用/启用与 scale 字段级编辑。
 - 新增 `zh_cn.json` 本地化。
 - 协议层支持大字符串（UTF-8 长度前缀）与 gzip 压缩。
 - 配置超限时输出警告日志。

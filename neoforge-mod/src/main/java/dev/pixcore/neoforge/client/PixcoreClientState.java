@@ -131,6 +131,11 @@ public final class PixcoreClientState {
         return settings.disabledRules.contains(id);
     }
 
+    public double scaleFor(IconRule rule) {
+        Double override = settings.ruleScaleOverrides.get(rule.id());
+        return override != null ? override : rule.scale();
+    }
+
     public List<IconRule> iconRules() {
         return iconRules;
     }
