@@ -36,6 +36,7 @@ public final class PixcoreClientState {
 
     public int capabilities = PixcoreProtocol.CAP_ALL;
     public int negotiatedProtocolVersion = PixcoreProtocol.VERSION;
+    public String serverFeaturesJson = "{}";
     public boolean connected = false;
 
     private List<IconRule> iconRules = new ArrayList<>();
@@ -83,6 +84,7 @@ public final class PixcoreClientState {
             connected = ack.accepted();
             if (ack.accepted()) {
                 negotiatedProtocolVersion = ack.protocolVersion();
+                serverFeaturesJson = ack.featuresJson();
                 sendResourcePackStatus();
             }
         } else if (packet instanceof IconRulesPacket iconRulesPacket) {

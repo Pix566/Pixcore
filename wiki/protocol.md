@@ -47,4 +47,4 @@ pixcore:main
 
 ## 版本协商
 
-`HandshakePacket` 携带 `minProtocolVersion`、`maxProtocolVersion` 与模块版本表 JSON。服务端会检查自身协议版本是否落在客户端支持区间内；区间兼容时握手成功，否则拒绝。`HandshakeAckPacket` 会返回最终协议版本和服务端模块版本表。
+`HandshakePacket` 携带 `minProtocolVersion`、`maxProtocolVersion` 与模块版本表 JSON。服务端会检查自身协议版本是否落在客户端支持区间内；区间兼容时握手成功，否则拒绝。`HandshakeAckPacket` 会返回最终协议版本、服务端模块版本表和服务端特性声明。

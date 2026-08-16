@@ -60,6 +60,19 @@ public final class PlayerListener implements Listener, PluginMessageListener {
         }
     }
 
+    private String serverFeaturesJson() {
+        Map<String, Object> features = new LinkedHashMap<>();
+        features.put("item-images", plugin.getConfigManager().moduleEnabled("item-images"));
+        features.put("armor", plugin.getConfigManager().moduleEnabled("armor"));
+        features.put("tooltip", plugin.getConfigManager().moduleEnabled("tooltip"));
+        features.put("hud", plugin.getConfigManager().moduleEnabled("hud"));
+        features.put("particles", plugin.getConfigManager().moduleEnabled("particles"));
+        features.put("keybinds", plugin.getConfigManager().moduleEnabled("keybinds"));
+        features.put("resource-pack-sync", plugin.getConfigManager().moduleEnabled("resource-pack-sync"));
+        features.put("pickup-hud", plugin.getConfigManager().moduleEnabled("pickup-hud"));
+        return Json.write(features);
+    }
+
     private boolean allowPacket(Player player) {
         int maxPerSecond = Math.max(1, plugin.getConfig().getInt("limits.max-events-per-player-per-second", 40));
         long now = System.currentTimeMillis() / 1000L;
@@ -107,7 +120,9 @@ public final class PlayerListener implements Listener, PluginMessageListener {
                 accepted,
                 plugin.getServer().getName(),
                 plugin.getServer().getMinecraftVersion(),
-                serverVersion
+                serverVersion,
+                PixcoreProtocol.defaultModuleVersionsJson(),
+                serverFeaturesJson()
         ));
 
         if (accepted) {

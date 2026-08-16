@@ -6,15 +6,21 @@ import java.io.IOException;
 
 /** Server -> client. Response to {@link HandshakePacket}. */
 public record HandshakeAckPacket(boolean accepted, String serverName, String serverVersion,
-                                 int protocolVersion, String moduleVersionsJson) implements Packet {
+                                 int protocolVersion, String moduleVersionsJson, String featuresJson) implements Packet {
     public HandshakeAckPacket {
         serverName = serverName == null ? "" : serverName;
         serverVersion = serverVersion == null ? "" : serverVersion;
         moduleVersionsJson = moduleVersionsJson == null ? "{}" : moduleVersionsJson;
+        featuresJson = featuresJson == null ? "{}" : featuresJson;
     }
 
     public HandshakeAckPacket(boolean accepted, String serverName, String serverVersion, int protocolVersion) {
-        this(accepted, serverName, serverVersion, protocolVersion, PixcoreProtocol.defaultModuleVersionsJson());
+        this(accepted, serverName, serverVersion, protocolVersion, PixcoreProtocol.defaultModuleVersionsJson(), "{}");
+    }
+
+    public HandshakeAckPacket(boolean accepted, String serverName, String serverVersion, int protocolVersion,
+                              String moduleVersionsJson) {
+        this(accepted, serverName, serverVersion, protocolVersion, moduleVersionsJson, "{}");
     }
 
     @Override
@@ -29,10 +35,11 @@ public record HandshakeAckPacket(boolean accepted, String serverName, String ser
         PacketCodec.writeString(out, serverVersion);
         out.writeInt(protocolVersion);
         PacketCodec.writeString(out, moduleVersionsJson);
+        PacketCodec.writeString(out, featuresJson);
     }
 
     static HandshakeAckPacket read(DataInput in) throws IOException {
         return new HandshakeAckPacket(in.readBoolean(), PacketCodec.readString(in), PacketCodec.readString(in),
-                in.readInt(), PacketCodec.readString(in));
+                in.readInt(), PacketCodec.readString(in), PacketCodec.readString(in));
     }
 }
