@@ -1,5 +1,6 @@
 package dev.pixcore.neoforge.client;
 
+import dev.pixcore.protocol.Json;
 import dev.pixcore.protocol.ResourcePackChunkPacket;
 import net.neoforged.fml.loading.FMLPaths;
 
@@ -7,8 +8,13 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.HexFormat;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /** Receives chunked resource pack files from the server and writes them locally. */
 public final class ResourcePackManager {
@@ -35,6 +41,33 @@ public final class ResourcePackManager {
                 ImageCache.INSTANCE.clear();
             }
         } catch (IOException ignored) {
+        }
+    }
+
+    public String manifestJson() {
+        Map<String, Object> manifest = new LinkedHashMap<>();
+        Path base = FMLPaths.GAMEDIR.get().resolve("resourcepacks").resolve("pixcore").normalize();
+        if (Files.isDirectory(base)) {
+            try (Stream<Path> stream = Files.walk(base)) {
+                stream.filter(Files::isRegularFile).forEach(path -> {
+                    String relative = base.relativize(path).toString().replace('\\', '/');
+                    try {
+                        manifest.put(relative, sha256(Files.readAllBytes(path)));
+                    } catch (IOException ignored) {
+                    }
+                });
+            } catch (IOException ignored) {
+            }
+        }
+        return Json.write(manifest);
+    }
+
+    private static String sha256(byte[] bytes) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            return HexFormat.of().formatHex(digest.digest(bytes));
+        } catch (NoSuchAlgorithmException e) {
+            return Integer.toHexString(java.util.Arrays.hashCode(bytes));
         }
     }
 

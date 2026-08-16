@@ -12,7 +12,9 @@ import dev.pixcore.protocol.PacketCodec;
 import dev.pixcore.protocol.ParticlePacket;
 import dev.pixcore.protocol.PixcoreProtocol;
 import dev.pixcore.protocol.ResourcePackChunkPacket;
+import dev.pixcore.protocol.ResourcePackStatusPacket;
 import dev.pixcore.protocol.TooltipRulesPacket;
+import dev.pixcore.neoforge.network.PixcorePayload;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
@@ -81,6 +83,7 @@ public final class PixcoreClientState {
             connected = ack.accepted();
             if (ack.accepted()) {
                 negotiatedProtocolVersion = ack.protocolVersion();
+                sendResourcePackStatus();
             }
         } else if (packet instanceof IconRulesPacket iconRulesPacket) {
             iconRules = IconRule.parseAll(iconRulesPacket.rulesJson());
@@ -101,6 +104,14 @@ public final class PixcoreClientState {
             hud.clear(clear.effectId());
         } else if (packet instanceof ResourcePackChunkPacket chunk) {
             resourcePack.handle(chunk);
+        }
+    }
+
+    private void sendResourcePackStatus() {
+        try {
+            ClientPacketDistributor.sendToServer(new PixcorePayload(PacketCodec.encode(
+                    new ResourcePackStatusPacket(resourcePack.manifestJson()))));
+        } catch (Exception ignored) {
         }
     }
 

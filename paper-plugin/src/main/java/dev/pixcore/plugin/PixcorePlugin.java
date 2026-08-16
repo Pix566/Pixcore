@@ -10,7 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HexFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +100,10 @@ public final class PixcorePlugin extends JavaPlugin {
      * Sends the server's resource pack folder to a compatible client in chunks.
      */
     public void syncResourcePack(Player player) {
+        syncResourcePack(player, Map.of());
+    }
+
+    public void syncResourcePack(Player player, Map<String, String> clientHashes) {
         if (!configManager.moduleEnabled("resource-pack-sync")) {
             return;
         }
@@ -116,6 +123,10 @@ public final class PixcorePlugin extends JavaPlugin {
             try {
                 byte[] bytes = Files.readAllBytes(file.toPath());
                 String relative = base.toPath().relativize(file.toPath()).toString().replace('\\', '/');
+                String serverHash = sha256(bytes);
+                if (serverHash.equals(clientHashes.get(relative))) {
+                    continue;
+                }
                 if (!session.shouldSendResourcePack(relative, bytes)) {
                     continue;
                 }
@@ -136,6 +147,15 @@ public final class PixcorePlugin extends JavaPlugin {
             } catch (IOException e) {
                 getLogger().log(Level.WARNING, "Failed to read resource pack file " + file, e);
             }
+        }
+    }
+
+    private static String sha256(byte[] bytes) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            return HexFormat.of().formatHex(digest.digest(bytes));
+        } catch (NoSuchAlgorithmException e) {
+            return Integer.toHexString(java.util.Arrays.hashCode(bytes));
         }
     }
 

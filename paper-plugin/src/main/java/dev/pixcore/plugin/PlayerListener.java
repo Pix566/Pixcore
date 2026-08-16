@@ -8,6 +8,7 @@ import dev.pixcore.protocol.KeyEventPacket;
 import dev.pixcore.protocol.Packet;
 import dev.pixcore.protocol.PacketCodec;
 import dev.pixcore.protocol.PixcoreProtocol;
+import dev.pixcore.protocol.ResourcePackStatusPacket;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +52,8 @@ public final class PlayerListener implements Listener, PluginMessageListener {
                     plugin.getLogger().info(player.getName() + " pressed Pixcore key " + keyEvent.keyId()
                             + " action=" + keyEvent.action());
                 }
+            } else if (packet instanceof ResourcePackStatusPacket status) {
+                handleResourcePackStatus(player, status);
             }
         } catch (Exception e) {
             plugin.getLogger().warning("Failed to decode Pixcore packet from " + player.getName() + ": " + e.getMessage());
@@ -78,6 +82,20 @@ public final class PlayerListener implements Listener, PluginMessageListener {
         return ++window[1] <= maxPerSecond;
     }
 
+    private void handleResourcePackStatus(Player player, ResourcePackStatusPacket status) {
+        Map<String, String> manifest = new HashMap<>();
+        try {
+            Object root = Json.parse(status.manifestJson());
+            if (root instanceof Map<?, ?> map) {
+                for (Map.Entry<?, ?> entry : map.entrySet()) {
+                    manifest.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        plugin.syncResourcePack(player, manifest);
+    }
+
     private void handleHandshake(Player player, HandshakePacket handshake) {
         int serverVersion = PixcoreProtocol.VERSION;
         boolean accepted = handshake.minProtocolVersion() <= serverVersion
@@ -94,7 +112,6 @@ public final class PlayerListener implements Listener, PluginMessageListener {
 
         if (accepted) {
             plugin.syncAll(player, session);
-            plugin.syncResourcePack(player);
         } else {
             plugin.getLogger().warning("Pixcore client " + player.getName()
                     + " supports protocol " + handshake.minProtocolVersion()

@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 ### Added
-- 资源包自动同步：服务端 `resourcepacks/pixcore` 分块同步到客户端，按文件哈希只发送变化文件，并按 tick 限流发送。
+- 资源包自动同步：客户端上报本地哈希，服务端只发送缺失/变化文件，支持跨会话断点续传，并按 tick 限流发送。
 - Tooltip 规则增强：支持 `combine: all|first`、颜色与粗体/斜体等样式、`translate`、`component-json` 组件。
 - 配置校验错误使用 SnakeYAML Mark 精确定位 YAML 行号。
 - 物品模型细化：支持 `foil` 强制附魔光泽，`handheld` 在第一人称视角放大显示，新增 `texture-gui` / `texture-hand` / `texture-ground` 多材质。

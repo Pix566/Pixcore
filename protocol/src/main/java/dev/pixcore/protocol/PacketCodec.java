@@ -75,6 +75,7 @@ public final class PacketCodec {
             case PixcoreProtocol.ID_KEY_EVENT -> KeyEventPacket.read(in);
             case PixcoreProtocol.ID_EFFECT_CLEAR -> EffectClearPacket.read(in);
             case PixcoreProtocol.ID_RESOURCE_PACK_CHUNK -> ResourcePackChunkPacket.read(in);
+            case PixcoreProtocol.ID_RESOURCE_PACK_STATUS -> ResourcePackStatusPacket.read(in);
             default -> throw new IOException("Unknown Pixcore packet id: " + id);
         };
     }

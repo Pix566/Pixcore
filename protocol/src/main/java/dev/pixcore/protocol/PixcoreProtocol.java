@@ -53,6 +53,7 @@ public final class PixcoreProtocol {
     public static final int ID_KEY_EVENT = 9;
     public static final int ID_EFFECT_CLEAR = 10;
     public static final int ID_RESOURCE_PACK_CHUNK = 11;
+    public static final int ID_RESOURCE_PACK_STATUS = 12;
 
     // Client capability bits
     public static final int CAP_COMBAT_TEXT = 1;

@@ -21,6 +21,7 @@
 ## 资源包自动同步
 
 - 服务端 `plugins/Pixcore/resourcepacks/pixcore/` 下的文件会自动分块同步给兼容客户端。
+- 客户端上报本地文件哈希，服务端只发送缺失或变化的文件，实现跨会话断点续传。
 - 客户端写入 `.minecraft/resourcepacks/pixcore/`，无需手动放置图片。
 - 通过 `modules.resource-pack-sync` 开关控制。
 

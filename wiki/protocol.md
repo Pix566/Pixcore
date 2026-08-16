@@ -31,6 +31,7 @@ pixcore:main
 | 9 | `KeyEvent` | C -> S | 按键按下/释放 |
 | 10 | `EffectClear` | S -> C | 清除效果 |
 | 11 | `ResourcePackChunk` | S -> C | 资源包文件分块 |
+| 12 | `ResourcePackStatus` | C -> S | 客户端本地资源包哈希清单 |
 
 ## 能力位
 

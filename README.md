@@ -104,7 +104,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 | 粒子效果 | 服务端下发 | `particles.yml` 进服自动触发，支持注册表内任意简单粒子 ID |
 | Tooltip 规则 | 服务端下发 + 客户端渲染 | `tooltip-text.yml` 支持 append/prepend/replace、combine、颜色/样式、translate、component-json 组件，匹配字段与图标一致，支持 `&` 颜色代码 |
 | 服务端按键 | 服务端下发 + 客户端动态注册 | `keybinds.yml` 定义，客户端动态创建 `KeyMapping` 并上报按下/释放 |
-| 资源包自动同步 | 服务端下发 + 客户端写入 | 服务端 `resourcepacks/pixcore` 文件夹按分块同步到客户端对应目录；同一会话内按文件哈希只发送变化文件，并按 tick 限流发送 |
+| 资源包自动同步 | 服务端下发 + 客户端写入 | 服务端 `resourcepacks/pixcore` 文件夹按分块同步到客户端对应目录；客户端上报本地哈希，服务端只发送缺失/变化文件，并按 tick 限流发送 |
 | 拾取 HUD 通知 | 服务端事件 + 客户端 HUD | 玩家拾取物品时自动在右下角显示物品名与数量 |
 | HUD 设置界面 | 客户端 | 按 `P` 打开设置，可开关战斗/治疗/怪物血条/拾取 HUD，并调整拾取 HUD 边距 |
 | 能力协商 | 双端 | 客户端握手声明 capabilities，服务端按能力下发 |
@@ -124,7 +124,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 
 通道：`pixcore:main`
 
-数据包：`Handshake`、`HandshakeAck`、`IconRules`、`Hud`、`TooltipRules`、`Particle`、`KeybindDefinitions`、`ArmorRules`、`KeyEvent`、`EffectClear`、`ResourcePackChunk`。
+数据包：`Handshake`、`HandshakeAck`、`IconRules`、`Hud`、`TooltipRules`、`Particle`、`KeybindDefinitions`、`ArmorRules`、`KeyEvent`、`EffectClear`、`ResourcePackChunk`、`ResourcePackStatus`。
 
 格式：`[compressionFlag:byte][packetId:byte][body]`；字符串使用 4 字节长度前缀的 UTF-8，JSON 承载复杂规则，大包自动 gzip 压缩。
 
@@ -138,7 +138,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 
 ### 中期
 - Tooltip 规则增强：已完成颜色/样式/combine/translate/component-json，下一步支持图片等复杂自定义组件与更复杂的冲突策略。
-- 资源包自动同步：已完成分块同步、文件哈希增量与 tick 限流，下一步增加版本校验与断点续传。
+- 资源包自动同步：已完成分块同步、文件哈希增量、tick 限流与客户端哈希上报断点续传。
 - 配置热更新与校验：已完成逐条校验、Tab 补全与 SnakeYAML 精确行号，下一步提供更细字段校验。
 - 协议能力协商扩展：已完成 min/max 版本协商与模块版本表，下一步增加服务端特性声明。
 
