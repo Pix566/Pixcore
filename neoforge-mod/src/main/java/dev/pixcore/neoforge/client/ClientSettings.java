@@ -23,6 +23,13 @@ public final class ClientSettings {
     public int pickupHudBottomMargin = 48;
     public final Set<String> disabledRules = new HashSet<>();
     public final Map<String, Double> ruleScaleOverrides = new HashMap<>();
+    public final Map<String, String> ruleTextureOverrides = new HashMap<>();
+    public final Map<String, Double> ruleDepthOverrides = new HashMap<>();
+    public final Map<String, Double> ruleXScaleOverrides = new HashMap<>();
+    public final Map<String, Double> ruleYScaleOverrides = new HashMap<>();
+    public final Map<String, Double> ruleZScaleOverrides = new HashMap<>();
+    public final Map<String, Boolean> ruleHandheldOverrides = new HashMap<>();
+    public final Map<String, Boolean> ruleFoilOverrides = new HashMap<>();
 
     public ClientSettings() {
     }
@@ -68,6 +75,28 @@ public final class ClientSettings {
                     }
                 }
             }
+            ruleTextureOverrides.clear();
+            String textures = props.getProperty("ruleTextureOverrides", "");
+            if (!textures.isEmpty()) {
+                for (String pair : textures.split(",")) {
+                    String[] parts = pair.split("=", 2);
+                    if (parts.length == 2) {
+                        ruleTextureOverrides.put(parts[0].trim(), parts[1].trim());
+                    }
+                }
+            }
+            ruleDepthOverrides.clear();
+            ruleXScaleOverrides.clear();
+            ruleYScaleOverrides.clear();
+            ruleZScaleOverrides.clear();
+            loadDoubleMap(props, "ruleDepthOverrides", ruleDepthOverrides);
+            loadDoubleMap(props, "ruleXScaleOverrides", ruleXScaleOverrides);
+            loadDoubleMap(props, "ruleYScaleOverrides", ruleYScaleOverrides);
+            loadDoubleMap(props, "ruleZScaleOverrides", ruleZScaleOverrides);
+            ruleHandheldOverrides.clear();
+            ruleFoilOverrides.clear();
+            loadBooleanMap(props, "ruleHandheldOverrides", ruleHandheldOverrides);
+            loadBooleanMap(props, "ruleFoilOverrides", ruleFoilOverrides);
         } catch (IOException | NumberFormatException ignored) {
             // keep defaults on any parse failure
         }
@@ -93,10 +122,79 @@ public final class ClientSettings {
                 scaleBuilder.append(entry.getKey()).append('=').append(entry.getValue());
             }
             props.setProperty("ruleScaleOverrides", scaleBuilder.toString());
+            putStringMap(props, "ruleTextureOverrides", ruleTextureOverrides);
+            putDoubleMap(props, "ruleDepthOverrides", ruleDepthOverrides);
+            putDoubleMap(props, "ruleXScaleOverrides", ruleXScaleOverrides);
+            putDoubleMap(props, "ruleYScaleOverrides", ruleYScaleOverrides);
+            putDoubleMap(props, "ruleZScaleOverrides", ruleZScaleOverrides);
+            putBooleanMap(props, "ruleHandheldOverrides", ruleHandheldOverrides);
+            putBooleanMap(props, "ruleFoilOverrides", ruleFoilOverrides);
             try (OutputStream out = Files.newOutputStream(file)) {
                 props.store(out, "Pixcore client settings");
             }
         } catch (IOException ignored) {
         }
+    }
+
+    private static void loadDoubleMap(Properties props, String key, Map<String, Double> target) {
+        String value = props.getProperty(key, "");
+        if (value.isEmpty()) {
+            return;
+        }
+        for (String pair : value.split(",")) {
+            String[] parts = pair.split("=");
+            if (parts.length == 2) {
+                try {
+                    target.put(parts[0].trim(), Double.parseDouble(parts[1].trim()));
+                } catch (NumberFormatException ignored) {
+                }
+            }
+        }
+    }
+
+    private static void loadBooleanMap(Properties props, String key, Map<String, Boolean> target) {
+        String value = props.getProperty(key, "");
+        if (value.isEmpty()) {
+            return;
+        }
+        for (String pair : value.split(",")) {
+            String[] parts = pair.split("=");
+            if (parts.length == 2) {
+                target.put(parts[0].trim(), Boolean.parseBoolean(parts[1].trim()));
+            }
+        }
+    }
+
+    private static void putStringMap(Properties props, String key, Map<String, String> map) {
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (builder.length() > 0) {
+                builder.append(',');
+            }
+            builder.append(entry.getKey()).append('=').append(entry.getValue());
+        }
+        props.setProperty(key, builder.toString());
+    }
+
+    private static void putDoubleMap(Properties props, String key, Map<String, Double> map) {
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<String, Double> entry : map.entrySet()) {
+            if (builder.length() > 0) {
+                builder.append(',');
+            }
+            builder.append(entry.getKey()).append('=').append(entry.getValue());
+        }
+        props.setProperty(key, builder.toString());
+    }
+
+    private static void putBooleanMap(Properties props, String key, Map<String, Boolean> map) {
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<String, Boolean> entry : map.entrySet()) {
+            if (builder.length() > 0) {
+                builder.append(',');
+            }
+            builder.append(entry.getKey()).append('=').append(entry.getValue());
+        }
+        props.setProperty(key, builder.toString());
     }
 }

@@ -93,11 +93,12 @@ public final class PixcoreDynamicTextureRenderer implements SpecialModelRenderer
         if (rule == null) {
             return null;
         }
-        ResourceLocation texture = ImageCache.INSTANCE.getOrLoad(rule.texture());
+        PixcoreClientState state = PixcoreClientState.INSTANCE;
+        ResourceLocation texture = ImageCache.INSTANCE.getOrLoad(state.textureFor(rule, ItemDisplayContext.NONE));
         if (texture == null) {
             return null;
         }
-        return new PixcoreRenderData(texture, PixcoreClientState.INSTANCE.scaleFor(rule), rule.depth(),
-                rule.xScale(), rule.yScale(), rule.zScale(), rule.handheld());
+        return new PixcoreRenderData(texture, state.scaleFor(rule), state.depthFor(rule),
+                state.xScaleFor(rule), state.yScaleFor(rule), state.zScaleFor(rule), state.handheldFor(rule));
     }
 }

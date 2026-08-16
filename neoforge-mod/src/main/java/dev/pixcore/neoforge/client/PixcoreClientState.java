@@ -136,6 +136,41 @@ public final class PixcoreClientState {
         return override != null ? override : rule.scale();
     }
 
+    public String textureFor(IconRule rule, net.minecraft.world.item.ItemDisplayContext context) {
+        String override = settings.ruleTextureOverrides.get(rule.id());
+        return override != null ? override : rule.textureFor(context);
+    }
+
+    public double depthFor(IconRule rule) {
+        Double override = settings.ruleDepthOverrides.get(rule.id());
+        return override != null ? override : rule.depth();
+    }
+
+    public double xScaleFor(IconRule rule) {
+        Double override = settings.ruleXScaleOverrides.get(rule.id());
+        return override != null ? override : rule.xScale();
+    }
+
+    public double yScaleFor(IconRule rule) {
+        Double override = settings.ruleYScaleOverrides.get(rule.id());
+        return override != null ? override : rule.yScale();
+    }
+
+    public double zScaleFor(IconRule rule) {
+        Double override = settings.ruleZScaleOverrides.get(rule.id());
+        return override != null ? override : rule.zScale();
+    }
+
+    public boolean handheldFor(IconRule rule) {
+        Boolean override = settings.ruleHandheldOverrides.get(rule.id());
+        return override != null ? override : rule.handheld();
+    }
+
+    public boolean foilFor(IconRule rule) {
+        Boolean override = settings.ruleFoilOverrides.get(rule.id());
+        return override != null ? override : rule.foil();
+    }
+
     public List<IconRule> iconRules() {
         return iconRules;
     }

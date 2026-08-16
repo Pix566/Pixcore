@@ -57,4 +57,4 @@
 - 拾取 HUD 开关
 - 拾取 HUD 右间距 / 下间距
 - 拖动模式：按住左键实时调整拾取 HUD 位置，并显示预览框
-- 查看已加载规则：打开规则查看器，显示图标/盔甲/Tooltip 规则，支持单条/一键禁用启用与 scale 字段编辑
+- 查看已加载规则：打开规则查看器，显示图标/盔甲/Tooltip 规则，支持单条/一键禁用启用与 texture/scale/depth/xyz-scale/handheld/foil 字段编辑

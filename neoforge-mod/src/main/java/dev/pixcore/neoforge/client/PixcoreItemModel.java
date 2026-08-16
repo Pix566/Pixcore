@@ -37,14 +37,15 @@ public final class PixcoreItemModel implements ItemModel {
         if (rule == null) {
             return;
         }
-        ResourceLocation texture = ImageCache.INSTANCE.getOrLoad(rule.textureFor(displayContext));
+        PixcoreClientState state = PixcoreClientState.INSTANCE;
+        ResourceLocation texture = ImageCache.INSTANCE.getOrLoad(state.textureFor(rule, displayContext));
         if (texture == null) {
             return;
         }
         ItemStackRenderState.LayerRenderState layer = renderState.newLayer();
-        layer.setupSpecialModel(renderer, new PixcoreRenderData(texture, PixcoreClientState.INSTANCE.scaleFor(rule), rule.depth(),
-                rule.xScale(), rule.yScale(), rule.zScale(), rule.handheld()));
-        if (rule.foil()) {
+        layer.setupSpecialModel(renderer, new PixcoreRenderData(texture, state.scaleFor(rule), state.depthFor(rule),
+                state.xScaleFor(rule), state.yScaleFor(rule), state.zScaleFor(rule), state.handheldFor(rule)));
+        if (state.foilFor(rule)) {
             layer.setFoilType(ItemStackRenderState.FoilType.STANDARD);
             renderState.setAnimated();
         }

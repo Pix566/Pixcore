@@ -60,16 +60,8 @@ public final class PixcoreRulesScreen extends Screen {
             }).bounds(20, y, 60, 18).build();
             addRenderableWidget(toggle);
 
-            double currentScale = state.iconRules().stream()
-                    .filter(r -> r.id().equals(plainId))
-                    .map(PixcoreClientState.INSTANCE::scaleFor)
-                    .findFirst()
-                    .orElseGet(() -> state.armorRules().stream()
-                            .filter(r -> r.id().equals(plainId))
-                            .map(PixcoreClientState.INSTANCE::scaleFor)
-                            .findFirst().orElse(1.0));
             Button edit = Button.builder(Component.literal("编辑"), btn ->
-                            this.minecraft.setScreen(new EditRuleScreen(plainId, currentScale)))
+                            this.minecraft.setScreen(new EditRuleScreen(plainId)))
                     .bounds(90, y, 50, 18)
                     .build();
             addRenderableWidget(edit);

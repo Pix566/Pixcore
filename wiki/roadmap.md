@@ -16,4 +16,4 @@
 
 - GeckoLib 3D 物品模型。
 - 跨 Minecraft 版本支持。
-- 客户端内置可视化配置器：已提供规则查看器、单条规则禁用/启用、一键禁用/启用与 scale 字段级编辑，下一步支持更多字段。
+- 客户端内置可视化配置器：已提供规则查看器、单条规则禁用/启用、一键禁用/启用与 texture/scale/depth/xyz-scale/handheld/foil 字段级编辑。
