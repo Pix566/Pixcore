@@ -26,4 +26,13 @@ public final class PixcoreClientItemExtensions implements IClientItemExtensions 
                 : rule.outerTexture();
         return ImageCache.INSTANCE.getOrLoad(path);
     }
+
+    @Override
+    public int getArmorLayerTintColor(ItemStack stack, EquipmentClientInfo.Layer layer, int layerIdx, int fallbackColor) {
+        IconRule rule = PixcoreClientState.INSTANCE.findArmorRule(stack);
+        if (rule != null && rule.color() != null) {
+            return rule.color();
+        }
+        return fallbackColor;
+    }
 }

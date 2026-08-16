@@ -31,12 +31,13 @@ public final class IconRule {
     private final double zScale;
     private final boolean handheld;
     private final boolean foil;
+    private final Integer color;
 
     private IconRule(String id, int priority, ItemMatcher matcher,
                      String texture, String innerTexture, String outerTexture,
                      String guiTexture, String handTexture, String groundTexture,
                      double scale, double depth, double xScale, double yScale, double zScale,
-                     boolean handheld, boolean foil) {
+                     boolean handheld, boolean foil, Integer color) {
         this.id = id;
         this.priority = priority;
         this.matcher = matcher;
@@ -53,6 +54,7 @@ public final class IconRule {
         this.zScale = zScale;
         this.handheld = handheld;
         this.foil = foil;
+        this.color = color;
     }
 
     public static IconRule fromMap(String id, Map<?, ?> map) {
@@ -70,12 +72,13 @@ public final class IconRule {
         double zScale = num(map.get("z-scale"), 1.0);
         boolean handheld = Boolean.TRUE.equals(map.get("handheld"));
         boolean foil = Boolean.TRUE.equals(map.get("foil"));
+        Integer color = parseColor(map.get("color"));
 
         Object match = map.get("match");
         ItemMatcher matcher = ItemMatcher.fromMap(match instanceof Map<?, ?> m ? m : null);
         return new IconRule(id, priority, matcher, texture, innerTexture, outerTexture,
                 guiTexture, handTexture, groundTexture,
-                scale, depth, xScale, yScale, zScale, handheld, foil);
+                scale, depth, xScale, yScale, zScale, handheld, foil, color);
     }
 
     public boolean matches(ItemStack stack) {
@@ -138,6 +141,26 @@ public final class IconRule {
 
     public boolean foil() {
         return foil;
+    }
+
+    public Integer color() {
+        return color;
+    }
+
+    private static Integer parseColor(Object o) {
+        if (o instanceof Number n) {
+            return n.intValue();
+        }
+        if (o instanceof String s) {
+            try {
+                if (s.startsWith("#")) {
+                    return Integer.parseUnsignedInt(s.substring(1), 16) | 0xFF000000;
+                }
+                return Integer.parseUnsignedInt(s, 16) | 0xFF000000;
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return null;
     }
 
     private static String str(Object o, String def) {

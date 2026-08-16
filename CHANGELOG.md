@@ -12,7 +12,7 @@
 - 服务端规则差异下发：使用 SHA-256 内容哈希，只向玩家发送发生变化的模块。
 - ImageCache LRU 缓存与自动淘汰。
 - 物品模型 3D 化：动态模型从平面升级为六面盒，支持 depth / x-scale / y-scale / z-scale。
-- 盔甲外观：通过 `IClientItemExtensions.getArmorTexture` 替换原版盔甲贴图，支持 inner-texture / outer-texture。
+- 盔甲外观：通过 `IClientItemExtensions.getArmorTexture` 替换原版盔甲贴图，支持 inner-texture / outer-texture / color 染色。
 - 配置逐条校验：非 Map 条目或缺少必填字段时跳过并输出定位日志。
 - HUD 性能优化：使用 ID 索引 Map 快速移除/更新条目。
 - 拾取 HUD 设置界面实时位置预览。

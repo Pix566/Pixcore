@@ -80,6 +80,7 @@ icons:
   texture: equipment/legendary.png
   inner-texture: equipment/legendary_inner.png
   outer-texture: equipment/legendary_outer.png
+  color: "#FFD700"
   scale: 1.0
 ```
 
