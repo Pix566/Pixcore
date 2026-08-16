@@ -34,12 +34,13 @@ public final class TooltipRule {
     private final boolean obfuscated;
     private final boolean firstMatchOnly;
     private final String translate;
+    private final String keybind;
     private final List<String> componentJsons;
 
     private TooltipRule(String id, int priority, String operation, ItemMatcher matcher, List<String> lines,
                         Integer color, boolean bold, boolean italic, boolean underlined,
                         boolean strikethrough, boolean obfuscated, boolean firstMatchOnly,
-                        String translate, List<String> componentJsons) {
+                        String translate, String keybind, List<String> componentJsons) {
         this.id = id;
         this.priority = priority;
         this.operation = operation;
@@ -53,6 +54,7 @@ public final class TooltipRule {
         this.obfuscated = obfuscated;
         this.firstMatchOnly = firstMatchOnly;
         this.translate = translate;
+        this.keybind = keybind;
         this.componentJsons = componentJsons;
     }
 
@@ -73,6 +75,7 @@ public final class TooltipRule {
                 Boolean.TRUE.equals(map.get("obfuscated")),
                 firstMatchOnly,
                 str(map.get("translate"), null),
+                str(map.get("keybind"), null),
                 parseStringList(map.get("component-json")));
     }
 
@@ -123,6 +126,9 @@ public final class TooltipRule {
         }
         if (translate != null && !translate.isEmpty()) {
             result.add(Component.translatable(translate).copy().withStyle(baseStyle));
+        }
+        if (keybind != null && !keybind.isEmpty()) {
+            result.add(Component.keybind(keybind).copy().withStyle(baseStyle));
         }
         for (String json : componentJsons) {
             Component component = parseComponentJson(json);

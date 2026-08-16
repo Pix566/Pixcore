@@ -136,13 +136,14 @@ legendary_hint:
   color: "#FFD700"
   bold: true
   translate: "item.minecraft.diamond_sword"
+  keybind: "key.use"
   component-json:
     - '{"text":" ⚔","color":"red"}'
   lines:
     - '✦ 传说级物品 ✦'
 ```
 
-`&` 颜色代码会被客户端转换为实际颜色；`color` / `bold` 等样式会应用到未显式指定格式的行；`translate` 会追加翻译组件，`component-json` 会解析为完整 Minecraft 文本组件。
+`&` 颜色代码会被客户端转换为实际颜色；`color` / `bold` 等样式会应用到未显式指定格式的行；`translate` 会追加翻译组件，`keybind` 会追加按键绑定组件，`component-json` 会解析为完整 Minecraft 文本组件。
 
 ## 粒子 `modules/particles.yml`
 
