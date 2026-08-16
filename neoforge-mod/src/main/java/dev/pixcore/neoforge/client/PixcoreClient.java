@@ -17,8 +17,10 @@ import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.event.RegisterItemModelsEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -77,6 +79,16 @@ public final class PixcoreClient {
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
         IClientItemExtensions extensions = new PixcoreClientItemExtensions();
         event.registerItem(extensions, BuiltInRegistries.ITEM.stream().toArray(Item[]::new));
+    }
+
+    @SubscribeEvent
+    public static void registerTooltipComponentFactories(RegisterClientTooltipComponentFactoriesEvent event) {
+        event.register(ImageTooltipComponent.class, ClientImageTooltipComponent::new);
+    }
+
+    @SubscribeEvent
+    public static void onGatherTooltipComponents(RenderTooltipEvent.GatherComponents event) {
+        PixcoreClientState.INSTANCE.imageTooltips.onGatherComponents(event);
     }
 
     @SubscribeEvent

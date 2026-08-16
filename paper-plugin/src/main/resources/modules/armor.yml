@@ -17,4 +17,6 @@
   legs-texture: equipment/legendary_legs.png
   feet-texture: equipment/legendary_feet.png
   color: "#FFD700"
+  pulse-color: "#FF4500"
+  pulse-speed: 1.0
   scale: 1.0

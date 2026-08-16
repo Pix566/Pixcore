@@ -35,12 +35,13 @@ public final class TooltipRule {
     private final boolean firstMatchOnly;
     private final String translate;
     private final String keybind;
+    private final String image;
     private final List<String> componentJsons;
 
     private TooltipRule(String id, int priority, String operation, ItemMatcher matcher, List<String> lines,
                         Integer color, boolean bold, boolean italic, boolean underlined,
                         boolean strikethrough, boolean obfuscated, boolean firstMatchOnly,
-                        String translate, String keybind, List<String> componentJsons) {
+                        String translate, String keybind, String image, List<String> componentJsons) {
         this.id = id;
         this.priority = priority;
         this.operation = operation;
@@ -55,6 +56,7 @@ public final class TooltipRule {
         this.firstMatchOnly = firstMatchOnly;
         this.translate = translate;
         this.keybind = keybind;
+        this.image = image;
         this.componentJsons = componentJsons;
     }
 
@@ -76,6 +78,7 @@ public final class TooltipRule {
                 firstMatchOnly,
                 str(map.get("translate"), null),
                 str(map.get("keybind"), null),
+                str(map.get("image"), null),
                 parseStringList(map.get("component-json")));
     }
 
@@ -97,6 +100,10 @@ public final class TooltipRule {
 
     public boolean firstMatchOnly() {
         return firstMatchOnly;
+    }
+
+    public String image() {
+        return image;
     }
 
     public List<Component> components() {

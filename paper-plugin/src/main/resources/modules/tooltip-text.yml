@@ -23,6 +23,7 @@ legendary_hint:
       variant: legendary
   color: "#FFD700"
   bold: true
+  image: tooltip/legendary_icon.png
   lines:
     - '✦ 传说级物品 ✦'
     - '&e右键查看详情'

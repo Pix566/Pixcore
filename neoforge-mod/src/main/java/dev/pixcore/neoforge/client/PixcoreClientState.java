@@ -31,6 +31,7 @@ public final class PixcoreClientState {
     public final HudEffectManager hud = new HudEffectManager();
     public final ParticleEffectManager particles = new ParticleEffectManager();
     public final TooltipManager tooltips = new TooltipManager();
+    public final ImageTooltipManager imageTooltips = new ImageTooltipManager();
     public final ServerKeybindManager keybinds = new ServerKeybindManager();
     public final ResourcePackManager resourcePack = new ResourcePackManager();
 
