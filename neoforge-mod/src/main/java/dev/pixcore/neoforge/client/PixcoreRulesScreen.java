@@ -36,8 +36,21 @@ public final class PixcoreRulesScreen extends Screen {
 
     @Override
     protected void init() {
+        PixcoreClientState state = PixcoreClientState.INSTANCE;
+        addRenderableWidget(Button.builder(Component.literal("禁用全部规则"), btn -> {
+            state.iconRules().forEach(r -> state.settings.disabledRules.add(r.id()));
+            state.armorRules().forEach(r -> state.settings.disabledRules.add(r.id()));
+            state.tooltips.rules().forEach(r -> state.settings.disabledRules.add(r.id()));
+            state.settings.save();
+        }).bounds(this.width / 2 - 160, this.height - 30, 100, 20).build());
+
+        addRenderableWidget(Button.builder(Component.literal("启用全部规则"), btn -> {
+            state.settings.disabledRules.clear();
+            state.settings.save();
+        }).bounds(this.width / 2 - 50, this.height - 30, 100, 20).build());
+
         addRenderableWidget(Button.builder(Component.literal("关闭"), btn -> this.minecraft.setScreen(null))
-                .bounds(this.width / 2 - 50, this.height - 30, 100, 20)
+                .bounds(this.width / 2 + 60, this.height - 30, 100, 20)
                 .build());
     }
 

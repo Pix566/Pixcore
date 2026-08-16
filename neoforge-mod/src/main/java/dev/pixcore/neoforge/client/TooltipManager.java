@@ -45,7 +45,7 @@ public final class TooltipManager {
         }
         List<Component> tooltip = event.getToolTip();
         for (TooltipRule rule : rules) {
-            if (!rule.matches(stack)) {
+            if (PixcoreClientState.INSTANCE.isRuleDisabled(rule.id()) || !rule.matches(stack)) {
                 continue;
             }
             List<Component> lines = rule.components();

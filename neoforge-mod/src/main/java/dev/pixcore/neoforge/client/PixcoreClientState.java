@@ -119,11 +119,15 @@ public final class PixcoreClientState {
 
     public IconRule findIconRule(ItemStack stack) {
         for (IconRule rule : iconRules) {
-            if (rule.matches(stack)) {
+            if (!isRuleDisabled(rule.id()) && rule.matches(stack)) {
                 return rule;
             }
         }
         return null;
+    }
+
+    public boolean isRuleDisabled(String id) {
+        return settings.disabledRules.contains(id);
     }
 
     public List<IconRule> iconRules() {
@@ -136,7 +140,7 @@ public final class PixcoreClientState {
 
     public IconRule findArmorRule(ItemStack stack) {
         for (IconRule rule : armorRules) {
-            if (rule.matches(stack)) {
+            if (!isRuleDisabled(rule.id()) && rule.matches(stack)) {
                 return rule;
             }
         }

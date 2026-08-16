@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 /** Client-side toggle settings, persisted under config/pixcore-client.properties. */
 public final class ClientSettings {
@@ -17,6 +19,7 @@ public final class ClientSettings {
     public boolean pickupHudEnabled = true;
     public int pickupHudRightMargin = 36;
     public int pickupHudBottomMargin = 48;
+    public final Set<String> disabledRules = new HashSet<>();
 
     public ClientSettings() {
     }
@@ -40,6 +43,15 @@ public final class ClientSettings {
             pickupHudEnabled = Boolean.parseBoolean(props.getProperty("pickupHudEnabled", "true"));
             pickupHudRightMargin = Integer.parseInt(props.getProperty("pickupHudRightMargin", "36"));
             pickupHudBottomMargin = Integer.parseInt(props.getProperty("pickupHudBottomMargin", "48"));
+            disabledRules.clear();
+            String disabled = props.getProperty("disabledRules", "");
+            if (!disabled.isEmpty()) {
+                for (String id : disabled.split(",")) {
+                    if (!id.isBlank()) {
+                        disabledRules.add(id.trim());
+                    }
+                }
+            }
         } catch (IOException | NumberFormatException ignored) {
             // keep defaults on any parse failure
         }
@@ -56,6 +68,7 @@ public final class ClientSettings {
             props.setProperty("pickupHudEnabled", Boolean.toString(pickupHudEnabled));
             props.setProperty("pickupHudRightMargin", Integer.toString(pickupHudRightMargin));
             props.setProperty("pickupHudBottomMargin", Integer.toString(pickupHudBottomMargin));
+            props.setProperty("disabledRules", String.join(",", disabledRules));
             try (OutputStream out = Files.newOutputStream(file)) {
                 props.store(out, "Pixcore client settings");
             }
