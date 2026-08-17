@@ -35,6 +35,7 @@ public final class PixcoreClientState {
     public final ServerKeybindManager keybinds = new ServerKeybindManager();
     public final ResourcePackManager resourcePack = new ResourcePackManager();
     public final LocalPickupHudManager localPickupHud = new LocalPickupHudManager();
+    public final PickupHudRenderer pickupHudRenderer = new PickupHudRenderer();
 
     public int capabilities = PixcoreProtocol.CAP_ALL;
     public int negotiatedProtocolVersion = PixcoreProtocol.VERSION;
@@ -75,6 +76,7 @@ public final class PixcoreClientState {
         keybinds.clearAll();
         resourcePack.clear();
         localPickupHud.clear();
+        pickupHudRenderer.clear();
         ImageCache.INSTANCE.clear();
         iconRules = new ArrayList<>();
         armorRules = new ArrayList<>();

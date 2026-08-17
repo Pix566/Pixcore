@@ -29,7 +29,7 @@
 
 - 支持文本和贴图。
 - 支持锚点、透明度、缩放、时长。
-- 客户端通过 Mixin 监听 `ClientboundTakeItemEntityPacket`，自动显示右下角通知，不依赖 Pixcore 服务端下发。
+- 客户端通过 Mixin 监听 `ClientboundTakeItemEntityPacket`，显示物品图标/名称/数量，短时间同物品自动合并，并带淡出动画，不依赖 Pixcore 服务端下发。
 
 ## Tooltip
 

@@ -105,7 +105,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 | Tooltip 规则 | 服务端下发 + 客户端渲染 | `tooltip-text.yml` 支持 append/prepend/replace、combine、颜色/样式、translate、keybind、component-json、image 图片组件，匹配字段与图标一致，支持 `&` 颜色代码 |
 | 服务端按键 | 服务端下发 + 客户端动态注册 | `keybinds.yml` 定义，客户端动态创建 `KeyMapping` 并上报按下/释放 |
 | 资源包自动同步 | 服务端下发 + 客户端写入 | 服务端 `resourcepacks/pixcore` 文件夹按分块同步到客户端对应目录；客户端上报本地哈希，服务端只发送缺失/变化文件，并按 tick 限流发送 |
-| 拾取 HUD 通知 | 客户端本地检测 | 客户端通过 Mixin 监听 `ClientboundTakeItemEntityPacket`，自动显示物品名与数量，不依赖 Pixcore 服务端下发 |
+| 拾取 HUD 通知 | 客户端本地检测 | 客户端通过 Mixin 监听 `ClientboundTakeItemEntityPacket`，显示物品图标/名称/数量，短时间同物品自动合并，并带淡出动画，不依赖 Pixcore 服务端下发 |
 | HUD 设置界面 | 客户端 | 按 `P` 打开设置，可开关战斗/治疗/怪物血条/拾取 HUD、调整边距、查看/禁用/编辑已加载规则 |
 | 能力协商 | 双端 | 客户端握手声明 capabilities，服务端按能力下发 |
 

@@ -110,6 +110,7 @@ public final class PixcoreClient {
         state.hud.tick();
         state.keybinds.tick(mc);
         state.localPickupHud.tick(mc);
+        state.pickupHudRenderer.tick();
 
         while (OPEN_MENU_KEY.consumeClick()) {
             sendToServer(new KeyEventPacket("open_menu", 1));
@@ -132,6 +133,7 @@ public final class PixcoreClient {
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent.Post event) {
         PixcoreClientState.INSTANCE.hud.render(event.getGuiGraphics());
+        PixcoreClientState.INSTANCE.pickupHudRenderer.render(event.getGuiGraphics());
     }
 
     @SubscribeEvent
