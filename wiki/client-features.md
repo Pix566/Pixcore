@@ -29,7 +29,7 @@
 
 - 支持文本和贴图。
 - 支持锚点、透明度、缩放、时长。
-- 客户端本地检测拾取物品，自动显示右下角通知，不依赖服务端。
+- 客户端通过 Mixin 监听 `ClientboundTakeItemEntityPacket`，自动显示右下角通知，不依赖 Pixcore 服务端下发。
 
 ## Tooltip
 

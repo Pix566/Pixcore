@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "ItemModelResolverMixin",
-    "HumanoidArmorLayerMixin"
+    "HumanoidArmorLayerMixin",
+    "ClientPacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

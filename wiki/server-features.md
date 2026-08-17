@@ -28,8 +28,8 @@
 ## 拾取 HUD
 
 - 拾取 HUD 现在由客户端本地检测实现。
-- 客户端跟踪附近物品实体，检测到消失时自动显示物品名与数量。
-- 不依赖服务端发送，`modules.pickup-hud` 仅保留为兼容开关。
+- 客户端通过 Mixin 监听 `ClientboundTakeItemEntityPacket` 自动显示物品名与数量。
+- 不依赖 Pixcore 服务端发送，`modules.pickup-hud` 仅保留为兼容开关。
 
 ## 限流与安全
 
