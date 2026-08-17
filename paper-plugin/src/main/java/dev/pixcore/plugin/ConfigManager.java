@@ -24,7 +24,8 @@ public final class ConfigManager {
             "modules/tooltip-text.yml",
             "modules/particles.yml",
             "modules/keybinds.yml",
-            "modules/armor.yml"
+            "modules/armor.yml",
+            "modules/monsters.yml"
     };
 
     private final PixcorePlugin plugin;
@@ -36,6 +37,7 @@ public final class ConfigManager {
     private Map<String, Object> particleEntries = Map.of();
     private Map<String, Object> keybindDefinitions = Map.of();
     private Map<String, Object> armorRules = Map.of();
+    private Map<String, Object> monsterRules = Map.of();
 
     private int maxIconRules = 512;
     private int maxHudEntries = 64;
@@ -43,6 +45,7 @@ public final class ConfigManager {
     private int maxParticleEntries = 64;
     private int maxKeybindDefinitions = 64;
     private int maxArmorRules = 64;
+    private int maxMonsterRules = 64;
     private int maxParticleCount = 128;
 
     public ConfigManager(PixcorePlugin plugin) {
@@ -72,6 +75,7 @@ public final class ConfigManager {
         maxParticleEntries = plugin.getConfig().getInt("limits.max-particle-entries", 64);
         maxKeybindDefinitions = plugin.getConfig().getInt("limits.max-keybind-definitions", 64);
         maxArmorRules = plugin.getConfig().getInt("limits.max-armor-rules", 64);
+        maxMonsterRules = plugin.getConfig().getInt("limits.max-monster-rules", 64);
         maxParticleCount = plugin.getConfig().getInt("limits.max-particle-count", 128);
 
         icons = limitMap(validateEntries(loadRoot("modules/icons.yml", "icons"), "icons", "texture", "modules/icons.yml"), maxIconRules, "icons");
@@ -80,6 +84,7 @@ public final class ConfigManager {
         particleEntries = limitMap(validateEntries(loadRoot("modules/particles.yml", null), "particles", "particle-id", "modules/particles.yml"), maxParticleEntries, "particles");
         keybindDefinitions = limitMap(validateEntries(loadRoot("modules/keybinds.yml", null), "keybinds", "default-key", "modules/keybinds.yml"), maxKeybindDefinitions, "keybinds");
         armorRules = limitMap(validateEntries(loadRoot("modules/armor.yml", null), "armor", "texture", "modules/armor.yml"), maxArmorRules, "armor");
+        monsterRules = limitMap(validateEntries(loadRoot("modules/monsters.yml", null), "monsters", "entity", "modules/monsters.yml"), maxMonsterRules, "monsters");
     }
 
     public boolean moduleEnabled(String key) {
@@ -108,6 +113,10 @@ public final class ConfigManager {
 
     public String getArmorJson() {
         return Json.write(armorRules);
+    }
+
+    public String getMonsterJson() {
+        return Json.write(monsterRules);
     }
 
     public Object findHudEntry(String id) {

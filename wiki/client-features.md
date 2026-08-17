@@ -25,6 +25,11 @@
 - 客户端通过 `IClientItemExtensions.getArmorTexture` 替换匹配盔甲的原版贴图。
 - 保留原版盔甲模型，只替换纹理。
 
+## 怪物外观
+
+- 服务端下发 `monsters.yml`。
+- 客户端按实体类型绘制半透明外观框，模拟 DragonCore 怪物模型功能。
+
 ## HUD
 
 - 支持文本和贴图。

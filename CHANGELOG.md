@@ -17,6 +17,7 @@
 - HUD 性能优化：使用 ID 索引 Map 快速移除/更新条目。
 - 拾取 HUD 设置界面实时位置预览。
 - 拾取 HUD 改为客户端本地检测：通过 Mixin 监听 `ClientboundTakeItemEntityPacket`，支持物品/箭/经验拾取，显示图标/名称/数量，短时间同物品自动合并，并带淡出动画，不依赖 Pixcore 服务端下发。
+- 怪物外观：新增 `MonsterRulesPacket` 与 `monsters.yml`，客户端按实体类型绘制半透明外观框，模仿 DragonCore 怪物模型功能。
 - 客户端规则查看器：在设置界面查看已加载图标/盔甲/Tooltip 规则，支持单条规则禁用/启用、一键禁用/启用与 texture/scale/depth/xyz-scale/handheld/foil 字段级编辑。
 - 新增 `zh_cn.json` 本地化。
 - 协议层支持大字符串（UTF-8 长度前缀）与 gzip 压缩。

@@ -7,6 +7,7 @@ import dev.pixcore.protocol.HandshakePacket;
 import dev.pixcore.protocol.HudPacket;
 import dev.pixcore.protocol.IconRulesPacket;
 import dev.pixcore.protocol.KeybindDefinitionsPacket;
+import dev.pixcore.protocol.MonsterRulesPacket;
 import dev.pixcore.protocol.Packet;
 import dev.pixcore.protocol.PacketCodec;
 import dev.pixcore.protocol.ParticlePacket;
@@ -36,6 +37,7 @@ public final class PixcoreClientState {
     public final ResourcePackManager resourcePack = new ResourcePackManager();
     public final LocalPickupHudManager localPickupHud = new LocalPickupHudManager();
     public final PickupHudRenderer pickupHudRenderer = new PickupHudRenderer();
+    public final MonsterModelManager monsterModels = new MonsterModelManager();
 
     public int capabilities = PixcoreProtocol.CAP_ALL;
     public int negotiatedProtocolVersion = PixcoreProtocol.VERSION;
@@ -77,6 +79,7 @@ public final class PixcoreClientState {
         resourcePack.clear();
         localPickupHud.clear();
         pickupHudRenderer.clear();
+        monsterModels.clear();
         ImageCache.INSTANCE.clear();
         iconRules = new ArrayList<>();
         armorRules = new ArrayList<>();
@@ -111,6 +114,8 @@ public final class PixcoreClientState {
             hud.clear(clear.effectId());
         } else if (packet instanceof ResourcePackChunkPacket chunk) {
             resourcePack.handle(chunk);
+        } else if (packet instanceof MonsterRulesPacket monsterRules) {
+            monsterModels.onPacket(monsterRules.rulesJson());
         }
     }
 

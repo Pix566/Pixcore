@@ -94,6 +94,18 @@ icons:
 
 客户端会用 `texture` / `inner-texture` / `outer-texture` 替换原版盔甲贴图，保留原版盔甲模型。
 
+## 怪物外观 `modules/monsters.yml`
+
+```yaml
+zombie:
+  entity: minecraft:zombie
+  texture: monsters/zombie.png
+  scale: 1.0
+  color: "#FF0000"
+```
+
+客户端会按实体类型绘制半透明外观框，作为 DragonCore 怪物模型功能的简化版。
+
 ## HUD `modules/hud.yml`
 
 支持 `text` 和 `texture` 两种类型：

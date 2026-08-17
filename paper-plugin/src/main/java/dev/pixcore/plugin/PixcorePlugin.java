@@ -1,5 +1,6 @@
 package dev.pixcore.plugin;
 
+import dev.pixcore.protocol.MonsterRulesPacket;
 import dev.pixcore.protocol.Packet;
 import dev.pixcore.protocol.PacketCodec;
 import dev.pixcore.protocol.PixcoreProtocol;
@@ -203,6 +204,12 @@ public final class PixcorePlugin extends JavaPlugin {
             String json = cfg.getArmorJson();
             if (session.shouldSend("armor", json)) {
                 sendPacket(player, new dev.pixcore.protocol.ArmorRulesPacket(json));
+            }
+        }
+        if (cfg.moduleEnabled("monsters") && PixcoreProtocol.hasCapability(caps, PixcoreProtocol.CAP_EFFECTS)) {
+            String json = cfg.getMonsterJson();
+            if (session.shouldSend("monsters", json)) {
+                sendPacket(player, new MonsterRulesPacket(json));
             }
         }
         if (cfg.moduleEnabled("tooltip") && PixcoreProtocol.hasCapability(caps, PixcoreProtocol.CAP_EFFECTS)) {

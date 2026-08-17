@@ -28,6 +28,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.event.RenderLivingEvent;
 import net.neoforged.neoforge.client.event.RenderNameTagEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
@@ -147,6 +148,11 @@ public final class PixcoreClient {
         PixcoreClientState state = PixcoreClientState.INSTANCE;
         state.combatText.render(mc, poseStack, bufferSource, event.getCamera());
         state.monsterHealth.render(mc, poseStack, bufferSource, event.getCamera());
+    }
+
+    @SubscribeEvent
+    public static void onRenderLivingPost(RenderLivingEvent.Post<?, ?, ?> event) {
+        PixcoreClientState.INSTANCE.monsterModels.render(event);
     }
 
     @SubscribeEvent

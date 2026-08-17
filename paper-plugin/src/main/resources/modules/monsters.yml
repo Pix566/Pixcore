@@ -1,0 +1,10 @@
+# Monster appearance rules (client-side overlay).
+# entity: 实体 ID，如 minecraft:zombie
+# texture: 客户端 resourcepacks/pixcore 下的贴图
+# scale: 显示大小
+# color: 可选染色
+zombie:
+  entity: minecraft:zombie
+  texture: monsters/zombie.png
+  scale: 1.0
+  color: "#FF0000"

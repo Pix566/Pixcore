@@ -100,6 +100,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 | 怪物血条 | 客户端 | 敌对生物头顶显示名称、像素条与生命数值，隐藏原版名牌 |
 | 自定义物品图片 / 模型替换 | 服务端规则 + 客户端渲染 | `icons.yml` 下发匹配规则；客户端通过 Mixin 注入 `ItemModelResolver`，动态选择 `pixcore:dynamic` 3D 模型，不修改物品数据；匹配字段含 material/name/name-regex/lore/lore-regex/nbt，支持 scale/depth/x-scale/y-scale/z-scale、handheld、foil、texture-gui/texture-hand/texture-ground 多材质 |
 | 盔甲外观 | 服务端规则 + 客户端渲染 | `armor.yml` 匹配盔甲，通过 `IClientItemExtensions` 替换贴图与模型，支持 inner/outer、按槽位贴图、color 染色、pulse-color 动态脉冲与 model-anim 模型动画，保留原版盔甲模型 |
+| 怪物外观 | 服务端规则 + 客户端渲染 | `monsters.yml` 匹配实体类型，客户端绘制半透明外观框，模拟 DragonCore 怪物模型功能 |
 | HUD 文本/图片 | 服务端下发 | `hud.yml` 支持 text/texture，锚点、透明度、缩放、时长 |
 | 粒子效果 | 服务端下发 | `particles.yml` 进服自动触发，支持注册表内任意简单粒子 ID |
 | Tooltip 规则 | 服务端下发 + 客户端渲染 | `tooltip-text.yml` 支持 append/prepend/replace、combine、颜色/样式、translate、keybind、component-json、image 图片组件，匹配字段与图标一致，支持 `&` 颜色代码 |
@@ -126,7 +127,7 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 - 服务端 -> 客户端：`pixcore:main`
 - 客户端 -> 服务端：`pixcore:main_c2s`
 
-数据包：`Handshake`、`HandshakeAck`、`IconRules`、`Hud`、`TooltipRules`、`Particle`、`KeybindDefinitions`、`ArmorRules`、`KeyEvent`、`EffectClear`、`ResourcePackChunk`、`ResourcePackStatus`。
+数据包：`Handshake`、`HandshakeAck`、`IconRules`、`Hud`、`TooltipRules`、`Particle`、`KeybindDefinitions`、`ArmorRules`、`MonsterRules`、`KeyEvent`、`EffectClear`、`ResourcePackChunk`、`ResourcePackStatus`。
 
 格式：`[compressionFlag:byte][packetId:byte][body]`；字符串使用 4 字节长度前缀的 UTF-8，JSON 承载复杂规则，大包自动 gzip 压缩。
 

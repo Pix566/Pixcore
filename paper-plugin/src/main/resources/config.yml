@@ -8,6 +8,7 @@ modules:
   particles: true
   keybinds: true
   armor: true
+  monsters: true
   pickup-hud: true
   resource-pack-sync: true
 
@@ -30,6 +31,7 @@ limits:
   max-particle-entries: 64
   max-particle-count: 128
   max-armor-rules: 64
+  max-monster-rules: 64
   max-events-per-player-per-second: 40
   max-keybind-definitions: 64
   max-key-events-per-second: 20
