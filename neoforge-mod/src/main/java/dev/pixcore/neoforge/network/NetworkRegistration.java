@@ -20,10 +20,9 @@ public final class NetworkRegistration {
     @SubscribeEvent
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar(String.valueOf(PixcoreProtocol.VERSION));
+        // Pixcore talks to a Paper server, so the NeoForge side only needs the
+        // clientbound registration to receive packets. Outgoing packets are sent
+        // directly through ClientPacketDistributor and Paper listens on the same channel.
         registrar.playToClient(PixcorePayload.TYPE, PixcorePayload.STREAM_CODEC);
-        registrar.playToServer(PixcorePayload.TYPE, PixcorePayload.STREAM_CODEC,
-                (payload, context) -> {
-                    // On NeoForge servers there is nothing to do; Paper handles input via Bukkit.
-                });
     }
 }
