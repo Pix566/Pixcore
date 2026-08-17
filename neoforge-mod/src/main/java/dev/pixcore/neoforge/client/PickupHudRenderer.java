@@ -62,13 +62,19 @@ public final class PickupHudRenderer {
             int rowWidth = 18 + 4 + textWidth;
             int x = screenW - settings.pickupHudRightMargin - rowWidth;
             int y = screenH - settings.pickupHudBottomMargin - (index + 1) * ROW_HEIGHT;
+
+            guiGraphics.pose().pushMatrix();
+            if (alpha < 1.0F) {
+                float cx = x + rowWidth / 2.0F;
+                float cy = y + 8.0F;
+                guiGraphics.pose().translate(cx, cy);
+                guiGraphics.pose().scale(alpha, alpha);
+                guiGraphics.pose().translate(-cx, -cy);
+            }
             guiGraphics.renderItem(entry.stack, x, y);
             guiGraphics.renderItemDecorations(mc.font, entry.stack, x, y);
             guiGraphics.drawString(mc.font, text, x + 18, y + 5, 0xFFFFFFFF, true);
-            int fadeAlpha = (int) ((1.0F - alpha) * 255.0F);
-            if (fadeAlpha > 0) {
-                guiGraphics.fill(x, y, x + rowWidth, y + 16, fadeAlpha << 24);
-            }
+            guiGraphics.pose().popMatrix();
             index++;
         }
     }
