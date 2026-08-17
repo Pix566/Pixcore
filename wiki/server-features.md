@@ -27,9 +27,9 @@
 
 ## 拾取 HUD
 
-- 服务端监听 `EntityPickupItemEvent`。
-- 玩家拾取物品时自动发送 HUD 文本。
-- 可通过 `modules.pickup-hud` 开关。
+- 拾取 HUD 现在由客户端本地检测实现。
+- 客户端跟踪附近物品实体，检测到消失时自动显示物品名与数量。
+- 不依赖服务端发送，`modules.pickup-hud` 仅保留为兼容开关。
 
 ## 限流与安全
 

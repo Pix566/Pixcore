@@ -2,7 +2,6 @@ package dev.pixcore.plugin;
 
 import dev.pixcore.protocol.HandshakeAckPacket;
 import dev.pixcore.protocol.HandshakePacket;
-import dev.pixcore.protocol.HudPacket;
 import dev.pixcore.protocol.Json;
 import dev.pixcore.protocol.KeyEventPacket;
 import dev.pixcore.protocol.Packet;
@@ -12,14 +11,11 @@ import dev.pixcore.protocol.ResourcePackStatusPacket;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import java.util.Map;
@@ -133,32 +129,6 @@ public final class PlayerListener implements Listener, PluginMessageListener {
                     + "-" + handshake.maxProtocolVersion()
                     + " but server expects " + serverVersion);
         }
-    }
-
-    @EventHandler
-    public void onPickupItem(EntityPickupItemEvent event) {
-        if (!plugin.getConfigManager().moduleEnabled("pickup-hud")) {
-            return;
-        }
-        if (!(event.getEntity() instanceof Player player)) {
-            return;
-        }
-        ItemStack stack = event.getItem().getItemStack();
-        String name = stack.hasItemMeta() && stack.getItemMeta() != null && stack.getItemMeta().hasDisplayName()
-                ? stack.getItemMeta().getDisplayName()
-                : stack.getI18NDisplayName();
-
-        Map<String, Object> data = new LinkedHashMap<>();
-        data.put("type", "text");
-        data.put("text", List.of(name + " x" + stack.getAmount()));
-        data.put("anchor", "bottom-right");
-        data.put("x", -8);
-        data.put("y", -8);
-        data.put("argb", 0xFFFFFFFF);
-        data.put("scale", 1.0);
-        data.put("shadow", true);
-        data.put("duration-ticks", 60);
-        plugin.sendPacket(player, new HudPacket("pickup", Json.write(data)));
     }
 
     @EventHandler

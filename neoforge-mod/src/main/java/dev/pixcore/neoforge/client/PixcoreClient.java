@@ -109,6 +109,7 @@ public final class PixcoreClient {
         state.combatText.tick(mc);
         state.hud.tick();
         state.keybinds.tick(mc);
+        state.localPickupHud.tick(mc);
 
         while (OPEN_MENU_KEY.consumeClick()) {
             sendToServer(new KeyEventPacket("open_menu", 1));
