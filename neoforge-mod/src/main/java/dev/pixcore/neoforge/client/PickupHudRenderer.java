@@ -28,7 +28,21 @@ public final class PickupHudRenderer {
                 return;
             }
         }
-        entries.add(new PickupEntry(key, stack.copy(), stack.getCount()));
+        entries.add(new PickupEntry(key, stack.copy(), stack.getCount(), null));
+    }
+
+    public void addText(String text) {
+        if (!PixcoreClientState.INSTANCE.settings.pickupHudEnabled) {
+            return;
+        }
+        String key = "text|" + text;
+        for (PickupEntry entry : entries) {
+            if (entry.key.equals(key)) {
+                entry.age = 0;
+                return;
+            }
+        }
+        entries.add(new PickupEntry(key, ItemStack.EMPTY, 0, text));
     }
 
     public void tick() {
@@ -57,9 +71,12 @@ public final class PickupHudRenderer {
             if (alpha <= 0.0F) {
                 continue;
             }
-            String text = entry.stack.getHoverName().getString() + " x" + entry.count;
+            String text = entry.displayText != null
+                    ? entry.displayText
+                    : entry.stack.getHoverName().getString() + " x" + entry.count;
             int textWidth = mc.font.width(text);
-            int rowWidth = 18 + 4 + textWidth;
+            int iconWidth = entry.stack.isEmpty() ? 0 : 18;
+            int rowWidth = iconWidth + 4 + textWidth;
             int x = screenW - settings.pickupHudRightMargin - rowWidth;
             int y = screenH - settings.pickupHudBottomMargin - (index + 1) * ROW_HEIGHT;
 
@@ -71,9 +88,11 @@ public final class PickupHudRenderer {
                 guiGraphics.pose().scale(alpha, alpha);
                 guiGraphics.pose().translate(-cx, -cy);
             }
-            guiGraphics.renderItem(entry.stack, x, y);
-            guiGraphics.renderItemDecorations(mc.font, entry.stack, x, y);
-            guiGraphics.drawString(mc.font, text, x + 18, y + 5, 0xFFFFFFFF, true);
+            if (!entry.stack.isEmpty()) {
+                guiGraphics.renderItem(entry.stack, x, y);
+                guiGraphics.renderItemDecorations(mc.font, entry.stack, x, y);
+            }
+            guiGraphics.drawString(mc.font, text, x + iconWidth, y + 5, 0xFFFFFFFF, true);
             guiGraphics.pose().popMatrix();
             index++;
         }
@@ -89,10 +108,13 @@ public final class PickupHudRenderer {
         int count;
         int age;
 
-        PickupEntry(String key, ItemStack stack, int count) {
+        final String displayText;
+
+        PickupEntry(String key, ItemStack stack, int count, String displayText) {
             this.key = key;
             this.stack = stack;
             this.count = count;
+            this.displayText = displayText;
         }
 
         float alpha() {

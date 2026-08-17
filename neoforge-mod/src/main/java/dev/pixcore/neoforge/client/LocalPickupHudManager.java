@@ -2,7 +2,9 @@ package dev.pixcore.neoforge.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -16,15 +18,22 @@ public final class LocalPickupHudManager {
         if (mc.player == null || mc.player.getId() != playerId) {
             return;
         }
-        if (!(level.getEntity(itemId) instanceof ItemEntity item)) {
-            return;
+        net.minecraft.world.entity.Entity entity = level.getEntity(itemId);
+        if (entity instanceof ItemEntity item) {
+            ItemStack stack = item.getItem().copy();
+            if (!stack.isEmpty()) {
+                stack.setCount(Math.max(1, amount));
+                showPickup(stack);
+            }
+        } else if (entity instanceof AbstractArrow arrow) {
+            ItemStack stack = arrow.getPickupItemStackOrigin().copy();
+            if (!stack.isEmpty()) {
+                stack.setCount(Math.max(1, amount));
+                showPickup(stack);
+            }
+        } else if (entity instanceof ExperienceOrb) {
+            PixcoreClientState.INSTANCE.pickupHudRenderer.addText("经验 + " + amount);
         }
-        ItemStack stack = item.getItem().copy();
-        if (stack.isEmpty()) {
-            return;
-        }
-        stack.setCount(Math.max(1, amount));
-        showPickup(stack);
     }
 
     private void showPickup(ItemStack stack) {
