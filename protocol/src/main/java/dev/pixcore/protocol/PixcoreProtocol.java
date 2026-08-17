@@ -16,6 +16,8 @@ public final class PixcoreProtocol {
 
     /** Custom payload channel used by both Paper and NeoForge. */
     public static final String CHANNEL = "pixcore:main";
+    /** Client -> server channel; NeoForge uses a separate payload id to avoid registration conflicts. */
+    public static final String SERVERBOUND_CHANNEL = "pixcore:main_c2s";
 
     /** Bump when the wire format or capability set changes. */
     public static final int VERSION = 4;

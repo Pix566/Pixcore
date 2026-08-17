@@ -14,7 +14,7 @@ import dev.pixcore.protocol.PixcoreProtocol;
 import dev.pixcore.protocol.ResourcePackChunkPacket;
 import dev.pixcore.protocol.ResourcePackStatusPacket;
 import dev.pixcore.protocol.TooltipRulesPacket;
-import dev.pixcore.neoforge.network.PixcorePayload;
+import dev.pixcore.neoforge.network.PixcoreServerPayload;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
@@ -54,7 +54,7 @@ public final class PixcoreClientState {
         capabilities = PixcoreProtocol.CAP_ALL;
         connected = false;
         try {
-            ClientPacketDistributor.sendToServer(new dev.pixcore.neoforge.network.PixcorePayload(
+            ClientPacketDistributor.sendToServer(new PixcoreServerPayload(
                     PacketCodec.encode(new HandshakePacket(PixcoreProtocol.VERSION, capabilities, "NeoForge"))
             ));
         } catch (Exception e) {
@@ -112,7 +112,7 @@ public final class PixcoreClientState {
 
     private void sendResourcePackStatus() {
         try {
-            ClientPacketDistributor.sendToServer(new PixcorePayload(PacketCodec.encode(
+            ClientPacketDistributor.sendToServer(new PixcoreServerPayload(PacketCodec.encode(
                     new ResourcePackStatusPacket(resourcePack.manifestJson()))));
         } catch (Exception ignored) {
         }

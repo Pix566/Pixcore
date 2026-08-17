@@ -39,7 +39,7 @@ public final class PixcorePlugin extends JavaPlugin {
 
         PlayerListener listener = new PlayerListener(this);
         getServer().getMessenger().registerOutgoingPluginChannel(this, PixcoreProtocol.CHANNEL);
-        getServer().getMessenger().registerIncomingPluginChannel(this, PixcoreProtocol.CHANNEL, listener);
+        getServer().getMessenger().registerIncomingPluginChannel(this, PixcoreProtocol.SERVERBOUND_CHANNEL, listener);
         getServer().getPluginManager().registerEvents(listener, this);
 
         var command = getCommand("pixcore");

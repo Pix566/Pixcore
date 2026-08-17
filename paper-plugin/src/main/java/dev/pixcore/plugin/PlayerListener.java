@@ -37,7 +37,7 @@ public final class PlayerListener implements Listener, PluginMessageListener {
 
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-        if (!PixcoreProtocol.CHANNEL.equals(channel)) {
+        if (!PixcoreProtocol.SERVERBOUND_CHANNEL.equals(channel)) {
             return;
         }
         if (!allowPacket(player)) {

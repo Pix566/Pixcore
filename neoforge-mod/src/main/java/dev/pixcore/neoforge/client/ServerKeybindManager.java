@@ -2,7 +2,7 @@ package dev.pixcore.neoforge.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
-import dev.pixcore.neoforge.network.PixcorePayload;
+import dev.pixcore.neoforge.network.PixcoreServerPayload;
 import dev.pixcore.protocol.Json;
 import dev.pixcore.protocol.KeyEventPacket;
 import dev.pixcore.protocol.PacketCodec;
@@ -153,7 +153,7 @@ public final class ServerKeybindManager {
 
     private static void send(KeyEventPacket packet) {
         try {
-            ClientPacketDistributor.sendToServer(new PixcorePayload(PacketCodec.encode(packet)));
+            ClientPacketDistributor.sendToServer(new PixcoreServerPayload(PacketCodec.encode(packet)));
         } catch (Exception ignored) {
         }
     }

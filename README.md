@@ -122,7 +122,9 @@ GitHub Actions 会在 push/PR 时自动构建并上传三个模块的 jar；打 
 
 ## 协议
 
-通道：`pixcore:main`
+通道：
+- 服务端 -> 客户端：`pixcore:main`
+- 客户端 -> 服务端：`pixcore:main_c2s`
 
 数据包：`Handshake`、`HandshakeAck`、`IconRules`、`Hud`、`TooltipRules`、`Particle`、`KeybindDefinitions`、`ArmorRules`、`KeyEvent`、`EffectClear`、`ResourcePackChunk`、`ResourcePackStatus`。
 

@@ -2,9 +2,8 @@
 
 ## 通道
 
-```text
-pixcore:main
-```
+- 服务端 -> 客户端：`pixcore:main`
+- 客户端 -> 服务端：`pixcore:main_c2s`
 
 ## 格式
 

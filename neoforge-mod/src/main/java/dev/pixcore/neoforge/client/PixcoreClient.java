@@ -3,6 +3,7 @@ package dev.pixcore.neoforge.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.pixcore.neoforge.PixcoreMod;
 import dev.pixcore.neoforge.network.PixcorePayload;
+import dev.pixcore.neoforge.network.PixcoreServerPayload;
 import dev.pixcore.protocol.KeyEventPacket;
 import dev.pixcore.protocol.PacketCodec;
 import net.minecraft.client.KeyMapping;
@@ -181,7 +182,7 @@ public final class PixcoreClient {
 
     private static void sendToServer(dev.pixcore.protocol.Packet packet) {
         try {
-            ClientPacketDistributor.sendToServer(new PixcorePayload(PacketCodec.encode(packet)));
+            ClientPacketDistributor.sendToServer(new PixcoreServerPayload(PacketCodec.encode(packet)));
         } catch (Exception ignored) {
         }
     }

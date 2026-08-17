@@ -36,4 +36,4 @@
 - `config.yml` 增加 `pickup-hud` 模块开关。
 - 移除旧物品装饰层叠加，统一由 Mixin 模型替换渲染，避免双重绘制。
 - 修复规则查看器中 Tooltip 规则点击“编辑”会打开空编辑页的问题，Tooltip 规则不再显示“编辑”按钮。
-- 修复 NeoForge 启动崩溃：移除重复的 `playToServer` 注册，Pixcore 仅注册 clientbound payload，出站数据仍通过 `ClientPacketDistributor` 发送。
+- 修复 NeoForge 网络崩溃：改用独立 serverbound payload `pixcore:main_c2s`，避免 `pixcore:main` 重复注册与出站编码失败。
