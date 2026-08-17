@@ -60,11 +60,13 @@ public final class PixcoreRulesScreen extends Screen {
             }).bounds(20, y, 60, 18).build();
             addRenderableWidget(toggle);
 
-            Button edit = Button.builder(Component.literal("编辑"), btn ->
-                            this.minecraft.setScreen(new EditRuleScreen(plainId)))
-                    .bounds(90, y, 50, 18)
-                    .build();
-            addRenderableWidget(edit);
+            if (!id.startsWith("tooltip:")) {
+                Button edit = Button.builder(Component.literal("编辑"), btn ->
+                                this.minecraft.setScreen(new EditRuleScreen(plainId)))
+                        .bounds(90, y, 50, 18)
+                        .build();
+                addRenderableWidget(edit);
+            }
 
             y += 20;
             shown++;
